@@ -1,2 +1,0 @@
-ServerCommunication.clientThread
-ServerCommunication.ServerCommunication
