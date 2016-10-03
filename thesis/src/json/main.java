@@ -1,9 +1,8 @@
 package json;
 
 
-import json.Builder;
 import java.security.NoSuchAlgorithmException;
-
+import servercommunication.Requestinfo;
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -16,11 +15,18 @@ import java.security.NoSuchAlgorithmException;
  */
 public class main {
      public static void main(String args[]) throws NoSuchAlgorithmException{
-        Builder b = new Builder(true);
+        Builder b = new Builder(false);
         b.authentication("koushikjay66", "Nopassword01");
         b.token();
-        b.service("env");
-        System.out.println(b.compile());
+        b.service("env", new String[]{"koushik", "arshad", "heya", "erfan"});
+         System.out.println(b.compile());
+         Requestinfo rs= new Requestinfo("172.16.25.76");
+         rs.sendData(b.compile());
+         System.out.println(rs.getReply());
+         
+         
+         
+       // parser p = new parser(b.compile());
         
     }
 }

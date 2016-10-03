@@ -38,7 +38,7 @@ public class Builder {
     private String password;
     private String token;
     private String serviceName;
-    private String basicComponents;
+    private String basicComponents="";
     private String request = "RES";
 
     public  Builder(boolean requestOrResponse) {
@@ -103,7 +103,7 @@ public class Builder {
         for (int i = 0; i < length - 1; i++) {
             this.basicComponents += basicComponents[i] + ",";
         }
-        this.basicComponents = basicComponents[length - 1];
+        this.basicComponents+= basicComponents[length - 1];
 
     }// End of service with two parameters
 
@@ -116,9 +116,9 @@ public class Builder {
         String JSON = ""
                 +"\""+this.request+"\" : {"
                 +"\"authentication\" : {"
-                +"\"USERID\": "+"\""+this.userID+"\" , \"password\": \""+this.password+"\"},"
+                +"\"USERID\": "+"\""+this.userID+"\", \"password\": \""+this.password+"\"}, "
                 +"\"token\": "+"\""+this.token+"\", "
-                +"\"service\": { "
+                +"\"service\": {"
                 +"\"name\": "+"\""+this.serviceName+"\", "
                 +"\"components\": "+"\""+this.basicComponents+"\""
                 +"}}";
