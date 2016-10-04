@@ -22,10 +22,10 @@ public class parser {
             throw new NullPointerException("JSON is empty");
         }
         this.JSON=JSON;
-        getIt();
+       
     }// End of constructor parser
     
-    public void getIt(){
+    public ReqestedParsedObject getIt(){
         Pattern p = Pattern.compile("(^(\"(REQ|RES)\") : \\{(\"([a-z]*)\") : \\{(\"([\\w]*)\"): (\"([a-z|A-Z|0-9]*)\"), "
                 + "(\"([a-z|A-Z|0-9]*)\"): (\"([a-z|A-Z|0-9]*)\")\\}, "
                 + "(\"([a-z]*)\"): (\"([a-z|A-Z|0-9]*)\"), (\"([a-z]*)\"): \\{"
@@ -33,10 +33,18 @@ public class parser {
                 + ")");
         Matcher m = p.matcher(JSON);
 
-        while(m.find()){
-            System.out.println(m.group(27));
+        if( m.find(0) && m.group(3).equals("REQ")){
+            int i = 9;
+            ReqestedParsedObject rpo = new ReqestedParsedObject();
+            rpo.userid=m.group(i);
+            rpo.password=m.group(i+4);
+            rpo.token=m.group(i+8);
+            rpo.serviceName=m.group(i+14);
+            rpo.params(m.group(i+18));
+            return rpo;
+        }else{
+            throw new IncompatibleClassChangeError("Invalid format for JSON");
         }
-       
     }
     
     

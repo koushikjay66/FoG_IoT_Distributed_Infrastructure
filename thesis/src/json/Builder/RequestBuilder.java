@@ -1,19 +1,20 @@
-package json;
-
-
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+package json.Builder;
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 /**
  *
  * @author Koushik
  */
-public class Builder {
+
+
+public class RequestBuilder {
     
     /**
      *  public static void main(String args[]) throws NoSuchAlgorithmException{
@@ -41,7 +42,7 @@ public class Builder {
     private String basicComponents="";
     private String request = "RES";
 
-    public  Builder(boolean requestOrResponse) {
+    public  RequestBuilder(boolean requestOrResponse) {
         if (requestOrResponse) {
             this.request = "REQ";
         }
