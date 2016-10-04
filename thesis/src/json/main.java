@@ -3,12 +3,7 @@ package json;
 
 import java.security.NoSuchAlgorithmException;
 import json.Builder.RequestBuilder;
-import servercommunication.Requestinfo;
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 
 /**
  *
@@ -26,7 +21,7 @@ public class main {
 //         System.out.println(rs.getReply());
 
         parser p = new parser(b.compile());
-         p.getIt();
+        p.getIt();
          
          
        // parser p = new parser(b.compile());

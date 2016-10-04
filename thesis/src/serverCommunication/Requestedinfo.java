@@ -6,7 +6,9 @@
 package servercommunication;
 
 import java.net.Socket;
+import json.ReqestedParsedObject;
 import json.parser;
+import service.Service;
 
 /**
  *
@@ -18,6 +20,7 @@ public class Requestedinfo {
     public Socket s;
     public String requestedString;
     public boolean possibleOrNot;
+    public ReqestedParsedObject rpo;
 
     public Requestedinfo(Socket s, String ip, String requested) {
         System.out.println("Requested from " + ip + " MSG : " + requested);
@@ -42,7 +45,8 @@ public class Requestedinfo {
      * @return true/ false depending on the things .
      */
     public boolean analizeRequested() {
-
+        parser p = new parser(requestedString);
+        rpo = p.getIt();
         return true;
     }// End of method analizeResult
 
@@ -50,6 +54,12 @@ public class Requestedinfo {
         if (!possibleOrNot) {
             return "Invalid Request";
         }
-        return "Requested thing found";
+        Service s = null;
+        if (rpo.optionalParam.length == 0) {
+             s = new Service(rpo.serviceName);
+        }else{
+             s = new Service(rpo.serviceName, rpo.optionalParam);
+        }
+        return s.compile();
     }// End of method generateResult
 }
