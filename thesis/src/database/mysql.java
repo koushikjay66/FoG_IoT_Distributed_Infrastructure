@@ -6,6 +6,11 @@
 package database;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 
 /**
  *
@@ -17,7 +22,13 @@ public class mysql {
      * This Constructor is only initializes connection 
      */
     public mysql(){
-        
+        try {
+            conn =
+                    DriverManager.getConnection("jdbc:mysql://localhost/services_db?" +
+                            "user=root&password=");
+        } catch (SQLException ex) {
+            Logger.getLogger(mysql.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     /**
      * Saves the 
