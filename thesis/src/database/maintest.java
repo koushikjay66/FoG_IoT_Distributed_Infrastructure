@@ -11,6 +11,6 @@ package database;
  */
 public class maintest {
     public static void main(String args[]){
-        mysql m = new mysql();
+        mysql m = new mysql("SELECT * FROM complex service" , "SELECT");
     }
 }
