@@ -9,7 +9,10 @@ import java.sql.Statement;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -21,8 +24,9 @@ public class mysql {
 
     private Connection conn;
     private Statement st;
-    public  ResultSet result;
-    private int changed=-1;
+    private ResultSet result;
+    public int changed = -1;
+    public HashMap res;
 
     /**
      * This Constructor is only initializes connection
@@ -32,7 +36,7 @@ public class mysql {
             conn
                     = DriverManager.getConnection("jdbc:mysql://localhost/services_db?"
                             + "user=root&password=");
-            
+
             processQuery(sql, QueryType);
         } catch (SQLException ex) {
             Logger.getLogger(mysql.class.getName()).log(Level.SEVERE, null, ex);
@@ -51,7 +55,7 @@ public class mysql {
     }// End of constructor
 
     /**
-     * 
+     *
      *
      * @param sql The SQL to execute
      * @return the result set for your query
@@ -61,33 +65,48 @@ public class mysql {
 
         st = conn.createStatement();
         if (st.execute(sql)) {
-                
-                result=st.getResultSet();
-            
-        }
 
-      
+            result = st.getResultSet();
+            if (result != null) {
+                ResultSetMetaData rsmd = result.getMetaData();
+                res= new HashMap<>();
+                int total_col = rsmd.getColumnCount();
+                String temp[] = new String[total_col];
+                for (int i = 0; i < total_col; i++) {
+                    
+                    temp[i] = rsmd.getColumnName(i + 1);
+                    res.put(temp[i], new ArrayList());
+                    
+                }
+                while (result.next()) {
+                    for (int i = 0; i < total_col; i++) {
+                        ArrayList al = (ArrayList) res.get(temp[i]);
+                        al.add(result.getString(temp[i]));
+                    }
+                }
+
+            }
+
+        }
     }
-    
-    private void executeOthers(String sql) throws SQLException{
-        
-         st = conn.createStatement();
+
+    private void executeOthers(String sql) throws SQLException {
+
+        st = conn.createStatement();
         if (st.execute(sql)) {
-                
-                changed=st.getUpdateCount();
-            
+            changed = st.getUpdateCount();
+
         }
 
-
     }
-    
-    private void processQuery(String sql, String QueryType) throws SQLException{
-        if(QueryType.equalsIgnoreCase("SELECT")){
+
+    private void processQuery(String sql, String QueryType) throws SQLException {
+        if (QueryType.equalsIgnoreCase("SELECT")) {
             executeSelect(sql);
-        }else{
+        } else {
             executeOthers(sql);
         }
-            
+
     }
 
 }

@@ -5,12 +5,21 @@
  */
 package database;
 
+import java.sql.SQLException;
+
 /**
  *
  * @author arsha
  */
 public class maintest {
-    public static void main(String args[]){
-        mysql m = new mysql("SELECT * FROM complex service" , "SELECT");
+    public static void main(String args[]) throws SQLException{
+        mysql m = new mysql("SELECT * FROM complex_service" , "SELECT");
+        //System.out.println(m.result.getString("csid"));;
+        
+        for (Object i: m.res.keySet()) {
+            System.out.println(i+"-> "+m.res.get(i).toString());
+        }
+        
+       
     }
 }
