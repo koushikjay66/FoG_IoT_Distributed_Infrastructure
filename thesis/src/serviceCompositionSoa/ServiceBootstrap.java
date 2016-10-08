@@ -6,11 +6,14 @@
 package serviceCompositionSoa;
 
 import database.mysql;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import service.Service;
-import java.util.LinkedHashSet;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 /**
  *input: service object
  * todo: get params and requested service name
@@ -31,8 +34,22 @@ import java.util.LinkedHashSet;
  * @author arsha
  */
 public class ServiceBootstrap {
+    /**
+    * r - results recieved from the query with key as complexService name and Arraylist of basic services
+    *  timestampres - Basic service timestamp values, key as basic ServiceName
+    *  ttlres - Basic service ttl differance values, key as basic ServiceName
+    *  valueres - Basic service values, key as basic ServiceName
+     */
     public static Map<String,ArrayList<String>> r = new HashMap();
+    public static Map<String,String> timestampres = new HashMap();
+    public static Map<String,Double> ttlres = new HashMap();
+    public static Map<String,Double> valuesres = new HashMap();
+    
     public static ArrayList<String> al;
+    public static String[] time;
+    public static int count;
+    
+    
     public static void getComplexServiceValues(String serviceName){
         mysql result = new mysql("SELECT ss_name FROM complex_service, simple_service, service_relation "
                 + "WHERE cs_name=\""+serviceName+"\" AND complex_service.csid=service_relation.csid AND "
@@ -43,33 +60,88 @@ public class ServiceBootstrap {
             String [] basicServices = basics.split(", ");
             
             for (int j = 0; j < basicServices.length; j++) {
-//                System.out.println(basicServices[j]);
                al = getsimpleServiceValues(basicServices[j]);
                r.put(basicServices[j],al);
-                
             }
             
-//            System.out.println(i+"-> "+result.res.get(i).toString());
         }
     }
     
+    static double value=0;
     public static ArrayList<String> getsimpleServiceValues(String serviceName){
         mysql result = new mysql("SELECT * FROM simple_service WHERE ss_name =\""+serviceName+"\"", "SELECT");
         ArrayList<String> vals= new ArrayList<String>();
+        double timeCount=0;
+        double ttlCount=0;
+       
         for (Object i: result.res.keySet()) {
-            vals.add(i+"-> "+result.res.get(i).toString());
-//            System.out.println(i+"-> "+result.res.get(i).toString());
+            String rslt=result.res.get(i).toString();
+            
+            if (i.equals("ss_timestamp")) {
+                Matcher m = Pattern.compile("(\\[(\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}\\.\\d{1})\\])").matcher(rslt);
+                timestampres.put(serviceName, m.group(2));
+                while(m.find()) {
+                   timeCount =  ttlCount(serviceName,m.group(2));
+                }
+            }     
+            else if (i.equals("ss_TTL")) {
+                    Matcher m2 = Pattern.compile("(\\[(\\d*)\\])").matcher(rslt);
+                    
+                while(m2.find()) {
+                    
+                   ttlCount =  Double.parseDouble(m2.group(2));
+                   ttlres.put(serviceName, ttlCount);
+                   double timeDiff= ttlCount-timeCount;
+                    System.out.println("ttl: "+timeDiff);
+                }
+            }else if (i.equals("ss_value")) {
+                Matcher m2 = Pattern.compile("(\\[(\\d*)\\])").matcher(rslt);
+                
+                while(m2.find()) {
+                    
+                    value =  Double.parseDouble(m2.group(2));
+                    valuesres.put(serviceName, value);
+                    System.out.println("value: "+value);
+                }
+            }
+                
+                
+            vals.add(i+"-> "+rslt);
         }
+ 
         return vals;
     }
     
-    
+    public static double ttlCount(String name,String timestamp){
+        long diff=0;
+        try{
+         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.S");
+         Date parsedDate = dateFormat.parse(timestamp);
+         Timestamp timestmp = new java.sql.Timestamp(parsedDate.getTime());
+//         System.out.println(timestmp);
+           long st = timestmp.getTime();
+           long ct = System.currentTimeMillis();
+            diff = ct-st;
+//            System.out.println(name+" service time: "+st);
+//            System.out.println(name+" current time: "+ct);
+//            System.out.print(name+" ttl Differance: ");
+            System.out.println(name+ " " +(diff/1000.0)+ " seconds");
+        }catch(Exception e){
+            System.out.println(name+" Time calculation error");
+        }
+        
+        return (diff/1000.0);
+    }
     
     public static void main(String[] args){
         getComplexServiceValues("env");
+        
+        
         for (Object i: r.keySet()) {
+            
             System.out.println(i.toString()+"->"+r.get(i).toString());
         }
     }
+    
     
 }
