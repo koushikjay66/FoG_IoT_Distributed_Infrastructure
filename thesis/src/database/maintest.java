@@ -20,6 +20,5 @@ public class maintest {
             System.out.println(i+"-> "+m.res.get(i).toString());
         }
         
-       
     }
 }

@@ -52,9 +52,9 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `services_db`.`Service Relation`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `services_db`.`Service Relation` ;
+DROP TABLE IF EXISTS `services_db`.`Service_Relation` ;
 
-CREATE TABLE IF NOT EXISTS `services_db`.`Service Relation` (
+CREATE TABLE IF NOT EXISTS `services_db`.`Service_Relation` (
   `csid` VARCHAR(255) NOT NULL COMMENT '',
   `ssid` VARCHAR(255) NOT NULL COMMENT '',
   INDEX `csid_idx` (`csid` ASC)  COMMENT '',
