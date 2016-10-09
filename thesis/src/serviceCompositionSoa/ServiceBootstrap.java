@@ -78,42 +78,32 @@ public class ServiceBootstrap {
             String rslt=result.res.get(i).toString();
             
             if (i.equals("ss_timestamp")) {
-                Matcher m = Pattern.compile("(\\[(\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}\\.\\d{1})\\])").matcher(rslt);
-                while(m.find()) {
-                   timeCount =  ttlCount(serviceName,m.group(2));
-                   timestampres.put(serviceName, m.group(2));
-                }
+                String str = result.res.get(i).toString().substring(1, result.res.get(i).toString().length()-1);
+                timeCount =  ttlCount(serviceName,str);
+                timestampres.put(serviceName, str);
+                System.out.println("Timestamp: "+str);
             }     
             else if (i.equals("ss_url")) {
                 url = result.res.get(i).toString().substring(1, result.res.get(i).toString().length()-1);
                 System.out.println("url: "+url);
             }
             else if (i.equals("ss_TTL")) {
-                    Matcher m2 = Pattern.compile("(\\[(\\d*)\\])").matcher(rslt);
-                    
-                while(m2.find()) {
-                    
-                   ttlCount =  Double.parseDouble(m2.group(2));
-                   ttlres.put(serviceName, ttlCount);
-                   double timeDiff= ttlCount-timeCount;
-                    if (timeDiff < 0) {
-                        Threads t = new Threads(serviceName,url);
-                        t.start();
-                    }
-                    System.out.println("ttl: "+timeDiff);
+                String str = result.res.get(i).toString().substring(1, result.res.get(i).toString().length()-1);
+                ttlCount =  Double.parseDouble(str);
+                ttlres.put(serviceName, ttlCount);
+                double timeDiff= ttlCount-timeCount;
+                if (timeDiff < 0) {
+                    Threads t = new Threads(serviceName,url);
+                    t.start();
                 }
+                System.out.println("ttl: "+timeDiff);
             }else if (i.equals("ss_value")) {
-                Matcher m2 = Pattern.compile("(\\[(\\d*)\\])").matcher(rslt);
-                
-                while(m2.find()) {
+                String str = result.res.get(i).toString().substring(1, result.res.get(i).toString().length()-1);
                     
-                    value =  Double.parseDouble(m2.group(2));
-                    valuesres.put(serviceName, value);
-                    System.out.println("value: "+value);
-                }
-            }
-                
-                
+                value =  Double.parseDouble(str);
+                valuesres.put(serviceName, value);
+                System.out.println("value: "+value);
+            } 
             vals.add(i+"-> "+rslt);
         }
  
@@ -123,12 +113,12 @@ public class ServiceBootstrap {
     public static double ttlCount(String name,String timestamp){
         long diff=0;
         try{
-         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.S  ");
-         Date parsedDate = dateFormat.parse(timestamp);
-         Timestamp timestmp = new java.sql.Timestamp(parsedDate.getTime());
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.S");
+            Date parsedDate = dateFormat.parse(timestamp);
+            Timestamp timestmp = new java.sql.Timestamp(parsedDate.getTime());
 //         System.out.println(timestmp);
-           long st = timestmp.getTime();
-           long ct = System.currentTimeMillis();
+            long st = timestmp.getTime();
+            long ct = System.currentTimeMillis();
             diff = ct-st;
 //            System.out.println(name+" service time: "+st);
 //            System.out.println(name+" current time: "+ct);
@@ -137,14 +127,11 @@ public class ServiceBootstrap {
         }catch(Exception e){
             System.out.println(name+" Time calculation error");
         }
-        
         return (diff/1000.0);
     }
     
     public static void main(String[] args){
-        getComplexServiceValues("home");
-        
-        
+        getComplexServiceValues("env");
         for (Object i: r.keySet()) {
             
             System.out.println(i.toString()+"->"+r.get(i).toString());
