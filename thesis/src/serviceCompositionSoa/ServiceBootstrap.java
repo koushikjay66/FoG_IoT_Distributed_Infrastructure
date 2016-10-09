@@ -73,17 +73,21 @@ public class ServiceBootstrap {
         ArrayList<String> vals= new ArrayList<String>();
         double timeCount=0;
         double ttlCount=0;
-       
+       String url="";
         for (Object i: result.res.keySet()) {
             String rslt=result.res.get(i).toString();
             
             if (i.equals("ss_timestamp")) {
                 Matcher m = Pattern.compile("(\\[(\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}\\.\\d{1})\\])").matcher(rslt);
-                timestampres.put(serviceName, m.group(2));
                 while(m.find()) {
                    timeCount =  ttlCount(serviceName,m.group(2));
+                   timestampres.put(serviceName, m.group(2));
                 }
             }     
+            else if (i.equals("ss_url")) {
+                url = result.res.get(i).toString().substring(1, result.res.get(i).toString().length()-1);
+                System.out.println("url: "+url);
+            }
             else if (i.equals("ss_TTL")) {
                     Matcher m2 = Pattern.compile("(\\[(\\d*)\\])").matcher(rslt);
                     
@@ -92,6 +96,10 @@ public class ServiceBootstrap {
                    ttlCount =  Double.parseDouble(m2.group(2));
                    ttlres.put(serviceName, ttlCount);
                    double timeDiff= ttlCount-timeCount;
+                    if (timeDiff < 0) {
+                        Threads t = new Threads(serviceName,url);
+                        t.start();
+                    }
                     System.out.println("ttl: "+timeDiff);
                 }
             }else if (i.equals("ss_value")) {
@@ -115,7 +123,7 @@ public class ServiceBootstrap {
     public static double ttlCount(String name,String timestamp){
         long diff=0;
         try{
-         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.S");
+         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.S  ");
          Date parsedDate = dateFormat.parse(timestamp);
          Timestamp timestmp = new java.sql.Timestamp(parsedDate.getTime());
 //         System.out.println(timestmp);
@@ -134,7 +142,7 @@ public class ServiceBootstrap {
     }
     
     public static void main(String[] args){
-        getComplexServiceValues("env");
+        getComplexServiceValues("home");
         
         
         for (Object i: r.keySet()) {
