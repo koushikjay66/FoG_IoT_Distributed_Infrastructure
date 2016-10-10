@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 /**
@@ -92,9 +94,14 @@ public class ServiceBootstrap {
                 ttlCount =  Double.parseDouble(str);
                 ttlres.put(serviceName, ttlCount);
                 double timeDiff= ttlCount-timeCount;
-                if (timeDiff < 0) {
+                if (timeDiff < 0) { //this has problems!!!
                     Threads t = new Threads(serviceName,url);
                     t.start();
+                try {
+                    t.thread.join();
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(ServiceBootstrap.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 }
                 System.out.println("ttl: "+timeDiff);
             }else if (i.equals("ss_value")) {
