@@ -11,11 +11,13 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 /**
  *input: service object
  * todo: get params and requested service name
@@ -42,14 +44,14 @@ public class ServiceBootstrap {
     *  ttlres - Basic service ttl differance values, key as basic ServiceName
     *  valueres - Basic service values, key as basic ServiceName
      */
+    //donotneed all these maps check later to remove if neccessary
     public static Map<String,ArrayList<String>> r = new HashMap();
     public static Map<String,String> timestampres = new HashMap();
     public static Map<String,Double> ttlres = new HashMap();
-    public static Map<String,Double> valuesres = new HashMap();
+    public static Map<String,String> valuesres = new HashMap(); // this is the final map that gets to the composer
     
     public static ArrayList<String> al;
-    public static String[] time;
-    public static int count;
+    public static String[] time;// no need
     
     
     public static void getComplexServiceValues(String serviceName){
@@ -73,6 +75,8 @@ public class ServiceBootstrap {
     public static ArrayList<String> getsimpleServiceValues(String serviceName){
         mysql result = new mysql("SELECT * FROM simple_service WHERE ss_name =\""+serviceName+"\"", "SELECT");
         ArrayList<String> vals= new ArrayList<String>();
+        ExecutorService executor = Executors.newFixedThreadPool(10);
+        List<Future<String>> list = new ArrayList<Future<String>>();// for getting values later from threads
         double timeCount=0;
         double ttlCount=0;
        String url="";
@@ -94,30 +98,39 @@ public class ServiceBootstrap {
                 ttlCount =  Double.parseDouble(str);
                 ttlres.put(serviceName, ttlCount);
                 double timeDiff= ttlCount-timeCount;
-                if (timeDiff < 0) { //this has problems!!!
-                    Threads t = new Threads(serviceName,url);
-                    t.start();
-                try {
-                    t.thread.join();
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(ServiceBootstrap.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                if (timeDiff < 0) { //this has problems!!! > dile if e dhuke
+                    Callable<String> t = new Threads(serviceName,url); // Callable and future for threads giving value
+                    Future<String> future = executor.submit(t);
+                    list.add(future);
+                    continue;
                 }
                 System.out.println("ttl: "+timeDiff);
             }else if (i.equals("ss_value")) {
                 String str = result.res.get(i).toString().substring(1, result.res.get(i).toString().length()-1);
                     
                 value =  Double.parseDouble(str);
-                valuesres.put(serviceName, value);
+                valuesres.put(serviceName, str);// str for check only here goes value
                 System.out.println("value: "+value);
             } 
             vals.add(i+"-> "+rslt);
         }
- 
+        for(Future<String> fut : list){
+            try {
+                //print the return value of Future, notice the output delay in console
+                // because Future.get() waits for task to get completed
+                String future = fut.get();
+                System.out.println(future);
+                String [] temp = future.split("--");
+                valuesres.put(temp[0], temp[1]);
+            } catch (InterruptedException | ExecutionException e) {
+                e.printStackTrace();
+            }
+        }
+        executor.shutdown();
         return vals;
     }
     
-    public static double ttlCount(String name,String timestamp){
+    public static double ttlCount(String name,String timestamp){ //need this fixed calculation not working
         long diff=0;
         try{
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.S");
@@ -137,12 +150,17 @@ public class ServiceBootstrap {
         return (diff/1000.0);
     }
     
-    public static void main(String[] args){
+    public static void main(String[] args){ // check only remove later
         getComplexServiceValues("env");
         for (Object i: r.keySet()) {
             
             System.out.println(i.toString()+"->"+r.get(i).toString());
         }
+        for (Object i: valuesres.keySet()) {
+            
+            System.out.println(i.toString()+"-->"+valuesres.get(i).toString());
+        }
+        
     }
     
     

@@ -11,12 +11,13 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.concurrent.Callable;
 
 /**
  *
  * @author astha
  */
-public class Threads extends Thread{
+public class Threads implements Callable<String>{
     public Thread thread;
     String serviceName="";
     String serurl="";
@@ -26,12 +27,10 @@ public class Threads extends Thread{
         this.serurl="http://api.openweathermap.org/data/2.5/weather?q=Dhaka&appid=820740a5e8c9759ce25fbf27676d9876"; //url 
     }
 
-    @Override
     public synchronized void start() {
         System.out.println("thread started");
-        thread = new Thread();
+        thread = new Thread((Runnable) this);
         thread.start();
-        this.run(); //why is it not working runnable class
     }
 
     public String sendOutput(){
@@ -39,8 +38,8 @@ public class Threads extends Thread{
     }
     
     @Override
-    public void run() {
-        System.out.println("sf"+httpReq());
+    public String call() {
+        return serviceName+"--"+httpReq();
         
     }
     
