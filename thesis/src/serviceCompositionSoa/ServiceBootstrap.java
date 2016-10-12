@@ -63,7 +63,7 @@ public class ServiceBootstrap {
         for (Object i: result.res.keySet()) {
             String basics = result.res.get(i).toString().substring(1, result.res.get(i).toString().length()-1);
             String [] basicServices = basics.split(", ");
-            
+//            System.out.println(i.toString()+"d"+result.res.get(i).toString());
             for (int j = 0; j < basicServices.length; j++) {
                al = getsimpleServiceValues(basicServices[j]);
                r.put(basicServices[j],al);
