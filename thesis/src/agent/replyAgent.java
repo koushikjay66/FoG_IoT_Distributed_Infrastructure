@@ -43,7 +43,7 @@ public class replyAgent {
                 String [] basicServices = basics.split( ", ");// divide every 
             
                 for (int j = 0; j < basicServices.length; j++) {
-                    valuemap.put(basicServices[j],getsimpleServiceTTL(basicServices[j]));
+                    valuemap.put(basicServices[j],getsimpleService(basicServices[j]));
                 }
             }else{
                 //ask cloud
@@ -53,7 +53,7 @@ public class replyAgent {
     }
     
     //This returns the basic service value as a string "serviceName,Value"
-    public static String getsimpleServiceTTL(String serviceName){
+    public static String getsimpleService(String serviceName){
         mysqlAgent result = new mysqlAgent("SELECT ss_name, ss_value FROM simple_service WHERE ss_name =\""+serviceName+"\"", "SELECT");
         String name="",value="";
         for (Object i: result.res.keySet()) {
@@ -65,14 +65,6 @@ public class replyAgent {
                  value = result.res.get(i).toString().substring(1, result.res.get(i).toString().length()-1);
 //                System.out.println("value: "+ value);
             }
-//            else if (i.equals("ss_TTL")) {
-//                 ttl = result.res.get(i).toString().substring(1, result.res.get(i).toString().length()-1);
-////                System.out.println("name: "+name);
-//            }
-//            else if (i.equals("ss_timestamp")) {
-//                 time = result.res.get(i).toString().substring(1, result.res.get(i).toString().length()-1);
-////                System.out.println("value: "+ value);
-//            }
         }
         String str = name+","+value;
         return str ;

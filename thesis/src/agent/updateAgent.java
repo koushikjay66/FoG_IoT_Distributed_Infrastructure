@@ -5,9 +5,9 @@
  */
 package agent;
 
-import static agent.replyAgent.getsimpleServiceTTL;
-import static agent.replyAgent.valuemap;
 import database.mysqlAgent;
+import java.util.HashMap;
+import java.util.Map;
 
 
 
@@ -16,27 +16,53 @@ import database.mysqlAgent;
  * @author arsha
  */
 public class updateAgent {
+    public static Map<String,String> ttlmap = new HashMap();
+    public static Map<String,String> timestampmap = new HashMap();
     
-    public void updateTable(String serviceName){
-         mysqlAgent result = new mysqlAgent("SELECT ss_name, ss_TTL, ss_timestamp FROM complex_service, simple_service, service_relation "
-                + "WHERE cs_name=\""+serviceName+"\" AND complex_service.csid=service_relation.csid AND "
-                + "service_relation.ssid=simple_service.ssid" , "SELECT");
+    public static String [] csname;
+    public static int [] cspriority;
+    public static String [] prio;
+    public static void updateTable(){
+         mysqlAgent result = new mysqlAgent("SELECT cs_name, cs_priority FROM complex_service" , "SELECT");
         for (Object i: result.res.keySet()) {
-            String rec = result.res.get(i).toString().substring(1, result.res.get(i).toString().length()-1);
             
-            
+            String basics = result.res.get(i).toString().substring(1, result.res.get(i).toString().length()-1);
+            System.out.println(basics);
+            if (basics.length()!=0) {
+                String [] basicServices = basics.split(", ");
+                
+                if (i.equals("cs_name")) {
+                    csname = new String[basicServices.length];
+                    for (int j = 0; j < csname.length; j++) {
+                        csname[j]=basicServices[j];
+                    }
+                }
+                else if (i.equals("cs_priority")) {
+                    cspriority = new int[basicServices.length];
+                    for (int j = 0; j < cspriority.length; j++) {
+                        cspriority[j]=Integer.parseInt(basicServices[j]);
+                    }
+                }
+            }
+        }
+        prio = new String[cspriority.length];
+        for (int i = 0; i < cspriority.length; i++) {
+            prio[cspriority[i]-1] = csname[i];
         }
     }
+    
+    
     public void increasePriority(String serviceName){
         
     }
     public static void main(String[] args){ // just for checking
-//        getComplexServiceValues("env");
-//        for (Object i: valuemap.keySet()) {
-//            
-//            System.out.println(i.toString()+"-->"+valuemap.get(i).toString());
-//        }
-
-
+        updateTable();
+        
+        for (int i = 0; i < csname.length; i++) {
+            System.out.println(csname[i]+" : "+cspriority[i]);
+        }
+        for (int i = 0; i < prio.length; i++) {
+            System.out.println(prio[i]);
+        }
     }
 }
