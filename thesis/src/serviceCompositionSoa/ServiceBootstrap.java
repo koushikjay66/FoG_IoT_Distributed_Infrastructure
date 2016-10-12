@@ -51,7 +51,8 @@ public class ServiceBootstrap {
     public static Map<String,String> valuesres = new HashMap(); // this is the final map that gets to the composer
     
     public static ArrayList<String> al;
-    public static String[] time;// no need
+    public static String[] time;// not needed later
+    public static int count; // not needed later
     
     
     public static void getComplexServiceValues(String serviceName){
@@ -77,8 +78,8 @@ public class ServiceBootstrap {
         ArrayList<String> vals= new ArrayList<String>();
         ExecutorService executor = Executors.newFixedThreadPool(10);
         List<Future<String>> list = new ArrayList<Future<String>>();// for getting values later from threads
-        double timeCount=0;
-        double ttlCount=0;
+        double timeCount=0;// for ttl calculation
+        double ttlCount=0;// for ttl calculation
        String url="";
         for (Object i: result.res.keySet()) {
             String rslt=result.res.get(i).toString();
@@ -97,29 +98,32 @@ public class ServiceBootstrap {
                 String str = result.res.get(i).toString().substring(1, result.res.get(i).toString().length()-1);
                 ttlCount =  Double.parseDouble(str);
                 ttlres.put(serviceName, ttlCount);
-                double timeDiff= ttlCount-timeCount;
-                if (timeDiff < 0) { //this has problems!!! > dile if e dhuke
-                    Callable<String> t = new Threads(serviceName,url); // Callable and future for threads giving value
-                    Future<String> future = executor.submit(t);
-                    list.add(future);
-                    continue;
-                }
-                System.out.println("ttl: "+timeDiff);
+                
             }else if (i.equals("ss_value")) {
                 String str = result.res.get(i).toString().substring(1, result.res.get(i).toString().length()-1);
                     
                 value =  Double.parseDouble(str);
                 valuesres.put(serviceName, str);// str for check only here goes value
                 System.out.println("value: "+value);
-            } 
+            }
             vals.add(i+"-> "+rslt);
         }
+        
+        System.out.println(ttlCount+" - "+timeCount);
+            double timeDiff= ttlCount-timeCount;
+                if (timeDiff < 0) { //this is to make ttl difference
+                    Callable<String> t = new Threads(serviceName,url); // Callable and future for threads giving value
+                    Future<String> future = executor.submit(t);
+                    list.add(future);
+                }
+                System.out.println("ttl: "+timeDiff);
+        
         for(Future<String> fut : list){
             try {
                 //print the return value of Future, notice the output delay in console
                 // because Future.get() waits for task to get completed
                 String future = fut.get();
-                System.out.println(future);
+//                System.out.println(future);
                 String [] temp = future.split("--");
                 valuesres.put(temp[0], temp[1]);
             } catch (InterruptedException | ExecutionException e) {
@@ -143,7 +147,7 @@ public class ServiceBootstrap {
 //            System.out.println(name+" service time: "+st);
 //            System.out.println(name+" current time: "+ct);
 //            System.out.print(name+" ttl Differance: ");
-            System.out.println(name+ " " +(diff/1000.0)+ " seconds");
+//            System.out.println(name+ " " +(diff/1000.0)+ " seconds");
         }catch(Exception e){
             System.out.println(name+" Time calculation error");
         }
@@ -152,10 +156,10 @@ public class ServiceBootstrap {
     
     public static void main(String[] args){ // check only remove later
         getComplexServiceValues("env");
-        for (Object i: r.keySet()) {
-            
-            System.out.println(i.toString()+"->"+r.get(i).toString());
-        }
+//        for (Object i: r.keySet()) {
+//            
+//            System.out.println(i.toString()+"->"+r.get(i).toString());
+//        }
         for (Object i: valuesres.keySet()) {
             
             System.out.println(i.toString()+"-->"+valuesres.get(i).toString());
