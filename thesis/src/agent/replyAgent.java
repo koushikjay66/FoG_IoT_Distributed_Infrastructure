@@ -6,10 +6,8 @@
 package agent;
 
 import database.mysql;
-import database.mysqlAgent;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -31,9 +29,12 @@ public class replyAgent {
      */
     // this searches for the complex service
     public static void getComplexServiceValues(String serviceName){ 
-        mysqlAgent result = new mysqlAgent("SELECT ss_name FROM complex_service, simple_service, service_relation "
+        String sql = "SELECT ss_name FROM complex_service, simple_service, service_relation "
                 + "WHERE cs_name=\""+serviceName+"\" AND complex_service.csid=service_relation.csid AND "
-                + "service_relation.ssid=simple_service.ssid" , "SELECT");
+                + "service_relation.ssid=simple_service.ssid";
+        
+        mysql result = new mysql(sql, "SELECT", "agent_lookup_table");
+        
         
         for (Object i: result.res.keySet()) {
             String basics = result.res.get(i).toString().substring(1, result.res.get(i).toString().length()-1);
@@ -54,7 +55,11 @@ public class replyAgent {
     
     //This returns the basic service value as a string "serviceName,Value"
     public static String getsimpleService(String serviceName){
-        mysqlAgent result = new mysqlAgent("SELECT ss_name, ss_value FROM simple_service WHERE ss_name =\""+serviceName+"\"", "SELECT");
+        
+        String sql="SELECT ss_name, ss_value FROM simple_service WHERE ss_name =\""+serviceName+"\"";
+        
+        mysql result = new mysql(sql, "SELECT", "agent_lookup_table");
+        
         String name="",value="";
         for (Object i: result.res.keySet()) {
             if (i.equals("ss_name")) {

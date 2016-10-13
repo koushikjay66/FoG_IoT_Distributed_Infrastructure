@@ -5,13 +5,16 @@
  */
 package service;
 
+import serviceCompositionSoa.ServiceBootstrap;
+
 /**
  *
  * @author Koushik
  */
 public class Service {
-    static String name;
-    static String [] opValues;
+    public String name;
+    public String [] opValues;
+    
    public Service (String name){
        this.name = name;
    }
@@ -27,7 +30,15 @@ public class Service {
    
    
    public String compile(){
-       return "In process of compliting Service Class";
+       ServiceBootstrap sb = new ServiceBootstrap(this);
+       if(sb.serviceResult.length==0){
+           return "call the agent khanki";
+       }
+       else{
+           return sb.serviceResult.toString();
+       }
    }
+   
+   
    
 }

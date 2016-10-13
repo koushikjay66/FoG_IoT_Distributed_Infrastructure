@@ -10,5 +10,9 @@ package json.Builder;
  * @author Koushik
  */
 public class ResponseBuilder {
+    public String token;
     
+    public String serviceArray[];
+    public String valu;
+   
 }

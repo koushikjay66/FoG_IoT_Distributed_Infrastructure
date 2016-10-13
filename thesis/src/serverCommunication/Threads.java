@@ -15,8 +15,10 @@ import java.util.logging.Logger;
  * @author Arshad
  */
 public class Threads extends Thread{
+    
     String clientIp;
     Socket s;
+    
     public Threads(String clientIp, Socket s){
         this.clientIp=clientIp;
         this.s=s;

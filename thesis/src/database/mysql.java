@@ -34,14 +34,25 @@ public class mysql {
     public mysql(String sql, String QueryType) {
         try {
             conn
-                    = DriverManager.getConnection("jdbc:mysql://localhost/services_db?"
-                            + "user=root&password=");
+                    = DriverManager.getConnection("jdbc:mysql://172.16.34.37/services_db?"
+                            + "user=kelu&password=Nopassword01");
 
             processQuery(sql, QueryType);
         } catch (SQLException ex) {
             Logger.getLogger(mysql.class.getName()).log(Level.SEVERE, null, ex);
         }
     }// End of this constructor
+    public mysql(String sql, String QueryType, String tableName){
+        try {
+            conn
+                    = DriverManager.getConnection("jdbc:mysql://172.16.34.37/"+tableName+"?"
+                            + "user=root&password=");
+
+            processQuery(sql, QueryType);
+        } catch (SQLException ex) {
+            Logger.getLogger(mysql.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     
     
 

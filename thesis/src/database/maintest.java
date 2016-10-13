@@ -6,6 +6,7 @@
 package database;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  *
@@ -14,10 +15,10 @@ import java.sql.SQLException;
 public class maintest {
     public static void main(String args[]) throws SQLException{
         mysql m = new mysql("SELECT * FROM complex_service" , "SELECT");
-        //System.out.println(m.result.getString("csid"));;
-        
+       // System.out.println(m.result.getString("csid"));;
+        ArrayList <String>ar;
         for (Object i: m.res.keySet()) {
-            System.out.println(i+"-> "+m.res.get(i).toString());
+            System.out.println(i+"-> "+m.res.get(i));
         }
         
     }

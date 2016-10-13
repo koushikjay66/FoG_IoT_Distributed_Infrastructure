@@ -5,7 +5,7 @@
  */
 package agent;
 
-import database.mysqlAgent;
+import database.mysql;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -31,7 +31,11 @@ public class updateAgent {
     public static ArrayList<String> simples = new ArrayList<>();
     public static void updateTable(){
         //get complex service by priority
-         mysqlAgent result = new mysqlAgent("SELECT cs_name FROM complex_service ORDER BY cs_priority ASC" , "SELECT");
+        String sql = "SELECT cs_name FROM complex_service ORDER BY cs_priority ASC";
+        
+         mysql result = new mysql(sql , "SELECT", "agent_lookup_table");
+         
+         
         for (Object i: result.res.keySet()) {
             String basics = result.res.get(i).toString().substring(1, result.res.get(i).toString().length()-1);
             System.out.println(basics);
@@ -56,11 +60,15 @@ public class updateAgent {
     public static String [] ssurl;
     public static String [] ssvalue;
     public static void updateComponents(String serviceName){
+        
         ExecutorService executor = Executors.newFixedThreadPool(10);
         List<Future<String>> list = new ArrayList<Future<String>>();// for getting values later from threads
-        mysqlAgent result = new mysqlAgent("SELECT ss_name, ss_url FROM complex_service, simple_service, service_relation "
+        
+        String sql= "SELECT ss_name, ss_url FROM complex_service, simple_service, service_relation "
                 + "WHERE cs_name=\""+serviceName+"\" AND complex_service.csid=service_relation.csid AND "
-                + "service_relation.ssid=simple_service.ssid" , "SELECT");
+                + "service_relation.ssid=simple_service.ssid";
+        
+        mysql result = new mysql(sql , "SELECT", "agent_lookup_table");
         //get all ssnames and url
         for (Object i: result.res.keySet()) {
             String basics = result.res.get(i).toString().substring(1, result.res.get(i).toString().length()-1);
@@ -85,7 +93,7 @@ public class updateAgent {
         }//finished getting all ssname and urls
         //http req for all ssname's new value
         for (int i = 0; i < ssname.length; i++) {
-              Callable<String> t = new Threads(ssname[i],ssurl[i]); // Callable and future for threads giving value
+              Callable<String> t = new Threads3(ssname[i],ssurl[i]); // Callable and future for threads giving value
                 Future<String> future = executor.submit(t);
                 list.add(future);
         }
@@ -111,8 +119,10 @@ public class updateAgent {
         }
     }
     public static void updateValues(String serviceName,String serviceValue){
-        mysqlAgent result = new mysqlAgent("UPDATE simple_service SET ss_value=\""+serviceValue+"\" "
-                + "WHERE ss_name=\""+serviceName+"\"", "UPDATE");
+        String sql= "UPDATE simple_service SET ss_value=\""+serviceValue+"\" "
+                + "WHERE ss_name=\""+serviceName+"\"";
+        
+        mysql result = new mysql(sql, "UPDATE", "agent_lookup_table");
     }
     
     

@@ -44,6 +44,7 @@ public class Requestedinfo {
      *
      * @return true/ false depending on the things .
      */
+    
     public boolean analizeRequested() {
         parser p = new parser(requestedString);
         rpo = p.getIt();
@@ -54,12 +55,14 @@ public class Requestedinfo {
         if (!possibleOrNot) {
             return "Invalid Request";
         }
-        Service s = null;
+
+        Service service = null;
         if (rpo.optionalParam.length == 0) {
-             s = new Service(rpo.serviceName);
+             service = new Service(rpo.serviceName);
         }else{
-             s = new Service(rpo.serviceName, rpo.optionalParam);
+            System.out.println("This has been called");
+             service = new Service(rpo.serviceName, rpo.optionalParam);
         }
-        return s.compile();
+        return service.compile();
     }// End of method generateResult
 }

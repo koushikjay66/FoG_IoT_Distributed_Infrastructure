@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package serviceCompositionSoa;
+package agent;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -17,12 +17,12 @@ import java.util.concurrent.Callable;
  *
  * @author astha
  */
-public class Threads implements Callable<String>{
+public class Threads3 implements Callable<String>{
     public Thread thread;
     String serviceName="";
     String serurl="";
     String recievedInput ="empty";
-    public Threads(String serviceName, String url){
+    public Threads3(String serviceName, String url){
         this.serviceName=serviceName;
         this.serurl="http://api.openweathermap.org/data/2.5/weather?q=Dhaka&appid=820740a5e8c9759ce25fbf27676d9876"; //url 
     }
