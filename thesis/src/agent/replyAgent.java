@@ -19,9 +19,16 @@ public class replyAgent {
     public static Map<String,String> valuemap = new HashMap();
         
     public Map<String,String> replyAgent(String serviceName){
+        updateAgent ua = new updateAgent();
         getComplexServiceValues(serviceName);
-//        increasePriority(serviceName); // increasePriority
+        increaseUpdateCount(serviceName);
+        ua.increasePriority(serviceName); // increasePriority
         return valuemap;  // update needed in SOA class to update SOA database with this new service
+    }
+    
+    public void increaseUpdateCount(String serviceName){
+        String sql = "UPDATE complex_service SET cs_update_count = cs_update_count + 1 WHERE cs_name=\""+serviceName+"\"";
+        mysql result = new mysql(sql, "UPDATE", "agent_lookup_table");
     }
     /**
      * 
@@ -49,7 +56,6 @@ public class replyAgent {
             }else{
                 //ask cloud
             }
-            
         }
     }
     

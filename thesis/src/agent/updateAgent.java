@@ -29,6 +29,12 @@ public class updateAgent {
     
     public static String [] csname;
     public static ArrayList<String> simples = new ArrayList<>();
+    
+    
+//    public updateAgent(){
+//        
+//    }
+    
     public static void updateTable(){
         //get complex service by priority
         String sql = "SELECT cs_name FROM complex_service ORDER BY cs_priority ASC";
@@ -119,16 +125,33 @@ public class updateAgent {
         }
     }
     public static void updateValues(String serviceName,String serviceValue){
-        String sql= "UPDATE simple_service SET ss_value=\""+serviceValue+"\" "
+        String sql= "UPDATE simple_service SET ss_value=\""+serviceValue+"\" AND ss_timestamp= "
                 + "WHERE ss_name=\""+serviceName+"\"";
         
         mysql result = new mysql(sql, "UPDATE", "agent_lookup_table");
     }
     
-    
+    String [] prionames;
     public void increasePriority(String serviceName){
+        String sql = "SELECT cs_name FROM complex_service ORDER BY cs_update_count DESC";
+        mysql result = new mysql(sql , "SELECT", "agent_lookup_table");
         
-    }
+        for (Object i: result.res.keySet()) {
+            String basics = result.res.get(i).toString().substring(1, result.res.get(i).toString().length()-1);
+            prionames = basics.split(", ");
+        }
+        for (int i = 0; i < prionames.length; i++) {
+            changePriority(prionames[i],i+1);
+        }
+    }// increasePriority di=one
+    
+    
+    
+    public static void changePriority(String serviceName, int i){
+        String sql = "UPDATE complex_service SET cs_priority="+i+"WHERE cs_name=\""+serviceName+"\"";
+         mysql result = new mysql(sql, "UPDATE", "agent_lookup_table");
+    }//End of changePriority
+    
     public static void main(String[] args){ // just for checking
         updateTable();
         
