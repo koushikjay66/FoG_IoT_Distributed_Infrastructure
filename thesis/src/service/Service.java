@@ -29,13 +29,14 @@ public class Service {
     }
    
    
-   public String compile(){
+   public Object[] compile(){
        ServiceBootstrap sb = new ServiceBootstrap(this);
        if(sb.serviceResult.length==0){
-           return "call the agent khanki";
+           return null;
        }
        else{
-           return sb.serviceResult.toString();
+           System.out.println("sklfhsklfhskfh");
+           return sb.serviceResult;
        }
    }
    

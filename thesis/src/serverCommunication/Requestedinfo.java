@@ -6,11 +6,13 @@
 package servercommunication;
 
 import java.net.Socket;
+import json.Builder.ResponseBuilder;
 import json.ReqestedParsedObject;
 import json.parser;
 import service.Service;
 
-/**0
+/**
+ * 0
  *
  * @author Arshad
  */
@@ -44,7 +46,6 @@ public class Requestedinfo {
      *
      * @return true/ false depending on the things .
      */
-    
     public boolean analizeRequested() {
         parser p = new parser(requestedString);
         rpo = p.getIt();
@@ -52,17 +53,21 @@ public class Requestedinfo {
     }// End of method analizeResult
 
     public String generateResult() {
+        System.out.println("skhsklfhsklfhkl");
         if (!possibleOrNot) {
             return "Invalid Request";
         }
 
         Service service = null;
         if (rpo.optionalParam.length == 0) {
-             service = new Service(rpo.serviceName);
-        }else{
+            service = new Service(rpo.serviceName);
+        } else {
             System.out.println("This has been called");
-             service = new Service(rpo.serviceName, rpo.optionalParam);
+            service = new Service(rpo.serviceName, rpo.optionalParam);
         }
-        return service.compile();
+
+        ResponseBuilder rb = new ResponseBuilder(service.compile(), rpo.token);
+        System.out.println(rb.compile());
+        return rb.compile();
     }// End of method generateResult
 }
