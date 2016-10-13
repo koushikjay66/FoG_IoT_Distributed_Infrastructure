@@ -20,7 +20,7 @@ import java.util.logging.Logger;
  *
  * @author Koushik
  */
-public class mysql {
+public class mysqlAgent {
 
     private Connection conn;
     private Statement st;
@@ -31,10 +31,10 @@ public class mysql {
     /**
      * This Constructor is only initializes connection
      */
-    public mysql(String sql, String QueryType) {
+    public mysqlAgent(String sql, String QueryType) {
         try {
             conn
-                    = DriverManager.getConnection("jdbc:mysql://localhost/services_db?"
+                    = DriverManager.getConnection("jdbc:mysql://localhost/agent_lookup_table?"
                             + "user=root&password=");
 
             processQuery(sql, QueryType);
@@ -45,7 +45,7 @@ public class mysql {
     
     
 
-    public mysql(String uri, String user, String password, String db_name, String sql, String QueryType) {
+    public mysqlAgent(String uri, String user, String password, String db_name, String sql, String QueryType) {
 
         String c = "jdbc:mysql://" + uri + "//" + db_name + "?user=" + user + "&password=" + password;
         try {
