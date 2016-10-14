@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package servercommunication;
+package serverCommunication;
 
 import java.io.IOException;
 import java.net.Socket;
@@ -15,7 +15,7 @@ import java.util.logging.Logger;
  * @author Arshad
  */
 public class Requestinfo {
-    private final static String ipToConnect="192.168.0.105";
+    private final static String ipToConnect="13.84.221.115";
     public Socket s;
     private String ip;
     private int port = 1140;
