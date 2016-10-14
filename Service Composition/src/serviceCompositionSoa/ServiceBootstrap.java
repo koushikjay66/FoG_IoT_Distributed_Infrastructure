@@ -151,7 +151,7 @@ public class ServiceBootstrap {
 
             
             double timeDiff = ttlCount - timeCount;
-            if (timeDiff > 0) { //this is to make ttl difference
+            if (timeDiff < 0) { //this is to make ttl difference
                 Callable<String> t = new Threads2(serviceName, url); // Callable and future for threads giving value
                 Future<String> future = executor.submit(t);
                 list.add(future);

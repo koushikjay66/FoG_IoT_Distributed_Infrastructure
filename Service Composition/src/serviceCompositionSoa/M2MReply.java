@@ -19,5 +19,7 @@ public class M2MReply {
         
         this.serviceName=serviceName;
         this.serviceValue=serviceValue;
+        System.out.println(serviceName);
+        System.out.println(this.serviceValue);
     }
 }
