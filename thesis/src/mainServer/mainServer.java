@@ -45,7 +45,7 @@ public class mainServer {
                 + "WHERE cs_name=\"" + serviceName + "\" AND complex_service.csid=service_relation.csid AND "
                 + "service_relation.ssid=simple_service.ssid";
 
-        mysql result = new mysql(sql, "SELECT", "agent_lookup_table");
+        mysql result = new mysql(sql, "SELECT", "main_server_db");
 
         if (result.res.get("ss_name").toString().equals("[]")) {
             valuemap.put(serviceName, getsimpleService(serviceName));
@@ -66,7 +66,7 @@ public class mainServer {
     public static String getsimpleService(String serviceName) {
 
         String sql = "SELECT ss_value FROM simple_service WHERE ss_name =\"" + serviceName + "\"";
-        mysql result = new mysql(sql, "SELECT", "agent_lookup_table");
+        mysql result = new mysql(sql, "SELECT", "main_server_db");
 
         String value = "";
         if (!result.res.get("ss_value").toString().equals("[]")) {
