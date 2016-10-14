@@ -21,7 +21,6 @@ public class main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
         bootstrap();
     }
 
@@ -31,7 +30,6 @@ public class main {
 
             while (true) {
                 Socket s = ss.accept();
-
                 Threads t = new Threads(s.getRemoteSocketAddress().toString(), s);
                 t.start();
             }
