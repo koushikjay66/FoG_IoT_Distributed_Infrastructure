@@ -34,8 +34,8 @@ public class mysql {
     public mysql(String sql, String QueryType) {
         try {
             conn
-                    = DriverManager.getConnection("jdbc:mysql://172.16.34.37/services_db?"
-                            + "user=kelu&password=Nopassword01");
+                    = DriverManager.getConnection("jdbc:mysql://52.165.29.136/services_db?"
+                            + "user=root&password=Nopassword01");
 
             processQuery(sql, QueryType);
         } catch (SQLException ex) {
@@ -45,8 +45,8 @@ public class mysql {
     public mysql(String sql, String QueryType, String tableName){
         try {
             conn
-                    = DriverManager.getConnection("jdbc:mysql://172.16.34.37/"+tableName+"?"
-                            + "user=root&password=");
+                    = DriverManager.getConnection("jdbc:mysql://52.165.29.136/"+tableName+"?"
+                            + "user=root&password=Nopassword01");
 
             processQuery(sql, QueryType);
         } catch (SQLException ex) {
