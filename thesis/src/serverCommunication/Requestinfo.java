@@ -50,7 +50,7 @@ public class Requestinfo {
         } catch (IOException ex) {
             Logger.getLogger(Requestinfo.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
+    }// End of method request Info
 
     /**
      *

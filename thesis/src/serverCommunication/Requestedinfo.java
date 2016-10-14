@@ -25,7 +25,6 @@ public class Requestedinfo {
     public ReqestedParsedObject rpo;
 
     public Requestedinfo(Socket s, String ip, String requested) {
-        System.out.println("Requested from " + ip + " MSG : " + requested);
         this.ip = ip;
         this.s = s;
         this.requestedString = requested;
@@ -33,6 +32,7 @@ public class Requestedinfo {
         possibleOrNot = analizeRequested();
 
     }// End of constructor
+    
 
     /**
      * This method analyzes the requested String. if The request result can be
@@ -53,7 +53,6 @@ public class Requestedinfo {
     }// End of method analizeResult
 
     public String generateResult() {
-        System.out.println("skhsklfhsklfhkl");
         if (!possibleOrNot) {
             return "Invalid Request";
         }
@@ -62,12 +61,10 @@ public class Requestedinfo {
         if (rpo.optionalParam.length == 0) {
             service = new Service(rpo.serviceName);
         } else {
-            System.out.println("This has been called");
             service = new Service(rpo.serviceName, rpo.optionalParam);
         }
 
         ResponseBuilder rb = new ResponseBuilder(service.compile(), rpo.token);
-        System.out.println(rb.compile());
         return rb.compile();
     }// End of method generateResult
 }

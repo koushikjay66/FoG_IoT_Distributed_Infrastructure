@@ -32,6 +32,7 @@ public class Service {
    public Object[] compile(){
        ServiceBootstrap sb = new ServiceBootstrap(this);
        if(sb.serviceResult.length==0){
+           // It is time to call the agent for service things
            return null;
        }
        else{
