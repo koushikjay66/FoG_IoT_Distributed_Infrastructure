@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package serverCommunication;
+package servercommunication;
 
 import java.io.IOException;
 import java.net.Socket;
@@ -34,8 +34,8 @@ public class Threads extends Thread{
      public void run(){
          String dataInput=readInput();
          Requestedinfo  redi = new Requestedinfo(s, clientIp, dataInput);
-         String result=redi.generateResult();
-         writeOutput(result);
+         //String result=redi.generateResult();
+         writeOutput("This works");
          
      }// End of method run
      

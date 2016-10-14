@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package serverCommunication;
+package servercommunication;
 
 import java.io.IOException;
 import java.net.Socket;
@@ -15,21 +15,12 @@ import java.util.logging.Logger;
  * @author Arshad
  */
 public class Requestinfo {
-<<<<<<< HEAD
-    private final static String ipToConnect="192.168.0.102";
-=======
-    private final static String ipToConnect="13.84.221.115";
->>>>>>> edd17f85898b360349fda5d706712952ce2c5650
+
+    private final static String ipToConnect = "192.168.0.105";
     public Socket s;
     private String ip;
     private int port = 1140;
 
-    /**
-     *
-     * @param ip - the IP address of the server you want to get info from . The
-     * servers are always running
-     */
-    
     public Requestinfo() {
         this.ip = ipToConnect;
         try {
@@ -38,6 +29,12 @@ public class Requestinfo {
             Logger.getLogger(Requestinfo.class.getName()).log(Level.SEVERE, null, ex);
         }
     }// End of constructor requestinfo
+
+    /**
+     *
+     * @param ip - the IP address of the server you want to get info from . The
+     * servers are always running
+     */
     public Requestinfo(String ip) {
         this.ip = ip;
         try {
@@ -88,9 +85,14 @@ public class Requestinfo {
      * @param t Option Boolean value to give to the parameters
      * @return returns status
      */
+    public boolean sendData(String nonJSONData, boolean t) {
+
+        return false;
+    }
+
     /**
-     * 
-     * @return null or the JSON ENCODED data after you have requested the thing 
+     *
+     * @return null or the JSON ENCODED data after you have requested the thing
      */
     public String getReply() {
         String reply = "";
@@ -105,6 +107,6 @@ public class Requestinfo {
                 return null;
             }
         }
-        
+
     }// End of method reply
 }

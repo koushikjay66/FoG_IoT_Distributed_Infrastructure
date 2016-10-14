@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package serverCommunication;
+package servercommunication;
 
 import java.net.Socket;
 import json.Builder.ResponseBuilder;
@@ -53,7 +53,7 @@ public class Requestedinfo {
     }// End of method analizeResult
 
     public String generateResult() {
-        if (!possibleOrNot) {
+            if (!possibleOrNot) {
             return "Invalid Request";
         }
 
@@ -67,15 +67,12 @@ public class Requestedinfo {
         Object [] ar = service.compile();
         
         if(ar==null){
-            Requestinfo rf = new Requestinfo();
-            rf.sendData(requestedString);
-            return rf.getReply();
+            return "Service Not Found";
         }
         else {
             ResponseBuilder rb = new ResponseBuilder(ar, rpo.token);
+            
             return rb.compile();
         }
-        
-        
     }// End of method generateResult
 }
