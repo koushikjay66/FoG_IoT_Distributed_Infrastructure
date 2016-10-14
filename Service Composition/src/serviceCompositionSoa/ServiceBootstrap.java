@@ -151,26 +151,6 @@ public class ServiceBootstrap {
 
             
             double timeDiff = ttlCount - timeCount;
-            if (timeDiff < 0) { //this is to make ttl difference
-                Callable<String> t = new Threads2(serviceName, url); // Callable and future for threads giving value
-                Future<String> future = executor.submit(t);
-                list.add(future);
-            }
-            
-
-            for (Future<String> fut : list) {
-                try {
-                    //print the return value of Future, notice the output delay in console
-                    // because Future.get() waits for task to get completed
-                    String future = fut.get();
-//                System.out.println(future);
-                    String[] temp = future.split("--");
-                    valuesres.put(temp[0], temp[1]);
-                } catch (InterruptedException | ExecutionException e) {
-                    e.printStackTrace();
-                }
-            }
-            executor.shutdown();
 
         }
         return vals;
