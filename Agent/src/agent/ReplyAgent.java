@@ -20,7 +20,7 @@ import json.Builder.M2MReply;
  */
 public class ReplyAgent {
 
-    public Map<String, String> valuemap = new HashMap();
+    private Map<String, String> valuemap = new HashMap();
     public Object[] serviceResult;
     private String serviceName;
 
@@ -37,6 +37,7 @@ public class ReplyAgent {
         if (valuemap.keySet() != null) {
             for (Object i : valuemap.keySet()) {
                 M2MReply bulala = new M2MReply(i.toString(), valuemap.get(i));
+                System.out.println(valuemap.get(i));
                 serviceResult[k] = bulala;
                 k++;
             }
@@ -62,7 +63,11 @@ public class ReplyAgent {
         mysql result = new mysql(sql, "SELECT", "agent_lookup_table");
 
         if (result.res.get("ss_name").toString().equals("[]")) {
-            valuemap.put(serviceName, getsimpleService(serviceName));
+            String str = getsimpleService(serviceName);
+            System.out.println(str);
+            if (str!=null) {
+                valuemap.put(serviceName, str);
+            }
         } else {
             for (Object i : result.res.keySet()) {
                 String basics = result.res.get(i).toString().substring(1, result.res.get(i).toString().length() - 1);
@@ -75,14 +80,15 @@ public class ReplyAgent {
 
         }
     }
-
+   
+    
     //This returns the basic service value as a string "serviceName,Value"
     private String getsimpleService(String serviceName) {
 
         String sql = "SELECT ss_value FROM simple_service WHERE ss_name =\"" + serviceName + "\"";
         mysql result = new mysql(sql, "SELECT", "agent_lookup_table");
 
-        String value = "";
+        String value = null;
         if (!result.res.get("ss_value").toString().equals("[]")) {
             for (Object i : result.res.keySet()) {
                 if (i.equals("ss_value")) {

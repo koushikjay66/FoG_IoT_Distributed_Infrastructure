@@ -17,7 +17,7 @@ public class main {
         b.token();
         b.service("kslhf", new String[]{"koushik", "arshad", "heya", "erfan"});
          System.out.println(b.compile());
-         Requestinfo rs= new Requestinfo("172.16.34.36");
+         Requestinfo rs= new Requestinfo("192.168.0.102");
          rs.sendData(b.compile());
          System.out.println(rs.getReply());
 

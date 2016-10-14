@@ -16,7 +16,7 @@ import java.util.logging.Logger;
  */
 public class Requestinfo {
 
-    private final static String ipToConnect = "192.168.0.105";
+    private final static String ipToConnect = "192.168.0.102";
     public Socket s;
     private String ip;
     private int port = 1140;
