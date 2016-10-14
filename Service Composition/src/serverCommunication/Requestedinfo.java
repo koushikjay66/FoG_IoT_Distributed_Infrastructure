@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package servercommunication;
+package serverCommunication;
 
 import java.net.Socket;
 import json.Builder.ResponseBuilder;
