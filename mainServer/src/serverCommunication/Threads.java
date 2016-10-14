@@ -34,8 +34,8 @@ public class Threads extends Thread{
      public void run(){
          String dataInput=readInput();
          Requestedinfo  redi = new Requestedinfo(s, clientIp, dataInput);
-         //String result=redi.generateResult();
-         writeOutput("This works");
+         String result=redi.generateResult();
+         writeOutput(result);
          
      }// End of method run
      
