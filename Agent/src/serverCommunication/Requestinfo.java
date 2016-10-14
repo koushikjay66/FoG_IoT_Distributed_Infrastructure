@@ -15,17 +15,12 @@ import java.util.logging.Logger;
  * @author Arshad
  */
 public class Requestinfo {
-    private final static String ipToConnect="192.168.0.105";
+
+    private final static String ipToConnect = "192.168.0.105";
     public Socket s;
     private String ip;
     private int port = 1140;
 
-    /**
-     *
-     * @param ip - the IP address of the server you want to get info from . The
-     * servers are always running
-     */
-    
     public Requestinfo() {
         this.ip = ipToConnect;
         try {
@@ -34,6 +29,12 @@ public class Requestinfo {
             Logger.getLogger(Requestinfo.class.getName()).log(Level.SEVERE, null, ex);
         }
     }// End of constructor requestinfo
+
+    /**
+     *
+     * @param ip - the IP address of the server you want to get info from . The
+     * servers are always running
+     */
     public Requestinfo(String ip) {
         this.ip = ip;
         try {
@@ -84,9 +85,14 @@ public class Requestinfo {
      * @param t Option Boolean value to give to the parameters
      * @return returns status
      */
+    public boolean sendData(String nonJSONData, boolean t) {
+
+        return false;
+    }
+
     /**
-     * 
-     * @return null or the JSON ENCODED data after you have requested the thing 
+     *
+     * @return null or the JSON ENCODED data after you have requested the thing
      */
     public String getReply() {
         String reply = "";
@@ -101,6 +107,6 @@ public class Requestinfo {
                 return null;
             }
         }
-        
+
     }// End of method reply
 }
