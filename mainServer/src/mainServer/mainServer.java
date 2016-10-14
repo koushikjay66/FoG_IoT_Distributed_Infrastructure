@@ -5,14 +5,12 @@
  */
 package mainServer;
 
-import static agent.replyAgent.getComplexServiceValues;
-import static agent.replyAgent.valuemap;
-import agent.updateAgent;
+
 import database.mysql;
 import java.util.HashMap;
 import java.util.Map;
 import service.Service;
-import serviceCompositionSoa.M2MReply;
+import json.Builder.M2MReply;
 
 /**
  *
@@ -20,7 +18,7 @@ import serviceCompositionSoa.M2MReply;
  */
 public class mainServer {
     
-     public static Map<String, String> valuemap = new HashMap();
+     public  Map<String, String> valuemap = new HashMap();
     public Object[] serviceResult;
     private String serviceName;
 
@@ -40,7 +38,7 @@ public class mainServer {
         }
     }// End of function constructor
     
-   public static void getComplexServiceValues(String serviceName) {
+   public  void getComplexServiceValues(String serviceName) {
         String sql = "SELECT ss_name FROM complex_service, simple_service, service_relation "
                 + "WHERE cs_name=\"" + serviceName + "\" AND complex_service.csid=service_relation.csid AND "
                 + "service_relation.ssid=simple_service.ssid";
@@ -63,7 +61,7 @@ public class mainServer {
     }
 
     //This returns the basic service value as a string "serviceName,Value"
-    public static String getsimpleService(String serviceName) {
+    public  String getsimpleService(String serviceName) {
 
         String sql = "SELECT ss_value FROM simple_service WHERE ss_name =\"" + serviceName + "\"";
         mysql result = new mysql(sql, "SELECT", "agent_lookup_table");
@@ -79,12 +77,6 @@ public class mainServer {
         return value;
     }// End of method getSimpleService
 
-    public static void main(String[] args) { // just for checking
-        getComplexServiceValues("env");
-        for (Object i : valuemap.keySet()) {
 
-            System.out.println(i.toString() + "-->" + valuemap.get(i).toString());
-        }
-    }
   
 }

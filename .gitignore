@@ -8,3 +8,6 @@
 /Service Composition/dist/
 /Agent/build/
 /Agent/dist/
+/mainServer/nbproject/private/
+/mainServer/build/
+/mainServer/dist/
