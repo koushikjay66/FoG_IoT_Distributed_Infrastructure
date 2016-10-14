@@ -147,8 +147,8 @@ public class updateAgent {
     
     
     
-    public static void changePriority(String serviceName, int i){
-        String sql = "UPDATE complex_service SET cs_priority="+i+"WHERE cs_name=\""+serviceName+"\"";
+    public void changePriority(String serviceName, int i){
+        String sql = "UPDATE complex_service SET cs_priority="+i+" WHERE cs_name=\""+serviceName+"\"";
          mysql result = new mysql(sql, "UPDATE", "agent_lookup_table");
     }//End of changePriority
     

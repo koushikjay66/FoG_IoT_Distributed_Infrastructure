@@ -20,7 +20,7 @@ import json.Builder.M2MReply;
  */
 public class ReplyAgent {
 
-    public static Map<String, String> valuemap = new HashMap();
+    public Map<String, String> valuemap = new HashMap();
     public Object[] serviceResult;
     private String serviceName;
 
@@ -36,14 +36,14 @@ public class ReplyAgent {
         int k = 0;
         if (valuemap.keySet() != null) {
             for (Object i : valuemap.keySet()) {
-                M2MReply bulala = new M2MReply(i.toString(), valuemap.get(i).toString());
+                M2MReply bulala = new M2MReply(i.toString(), valuemap.get(i));
                 serviceResult[k] = bulala;
                 k++;
             }
         }
     }// End of function constructor
 
-    public void increaseUpdateCount(String serviceName) {
+    private void increaseUpdateCount(String serviceName) {
 
         String sql = "UPDATE complex_service SET cs_update_count = cs_update_count + 1 WHERE cs_name=\"" + serviceName + "\"";
         mysql result = new mysql(sql, "UPDATE", "agent_lookup_table");
@@ -54,7 +54,7 @@ public class ReplyAgent {
      * @param serviceName - the required service name
      */
     // this searches for the complex service
-    public static void getComplexServiceValues(String serviceName) {
+    private void getComplexServiceValues(String serviceName) {
         String sql = "SELECT ss_name FROM complex_service, simple_service, service_relation "
                 + "WHERE cs_name=\"" + serviceName + "\" AND complex_service.csid=service_relation.csid AND "
                 + "service_relation.ssid=simple_service.ssid";
@@ -77,7 +77,7 @@ public class ReplyAgent {
     }
 
     //This returns the basic service value as a string "serviceName,Value"
-    public static String getsimpleService(String serviceName) {
+    private String getsimpleService(String serviceName) {
 
         String sql = "SELECT ss_value FROM simple_service WHERE ss_name =\"" + serviceName + "\"";
         mysql result = new mysql(sql, "SELECT", "agent_lookup_table");
