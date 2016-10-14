@@ -11,22 +11,30 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import service.Service;
 /**
  *
  * @author arsha
  */
 public class replyAgent {
+    
     public static Map<String,String> valuemap = new HashMap();
-        
-    public Map<String,String> replyAgent(String serviceName){
+    public Object[] serviceResult; 
+    private String serviceName;
+    
+    
+    
+    public replyAgent(Service s){
+        this.serviceName=s.name;
         updateAgent ua = new updateAgent();
         getComplexServiceValues(serviceName);
         increaseUpdateCount(serviceName);
         ua.increasePriority(serviceName); // increasePriority
-        return valuemap;  // update needed in SOA class to update SOA database with this new service
-    }
+        
+    }// End of function constructor
     
     public void increaseUpdateCount(String serviceName){
+        
         String sql = "UPDATE complex_service SET cs_update_count = cs_update_count + 1 WHERE cs_name=\""+serviceName+"\"";
         mysql result = new mysql(sql, "UPDATE", "agent_lookup_table");
     }
@@ -55,6 +63,8 @@ public class replyAgent {
                 }
             }else{
                 //ask cloud
+                
+                
             }
         }
     }
@@ -77,9 +87,8 @@ public class replyAgent {
 //                System.out.println("value: "+ value);
             }
         }
-        String str = name+","+value;
-        return str ;
-    }
+        return value;
+    }// End of method getSimpleService
     
     public static double ttlCount(String name,String timestamp){ //need this fixed calculation not working
         long diff=0;

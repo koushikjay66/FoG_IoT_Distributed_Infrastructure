@@ -35,7 +35,6 @@ public class Service {
            return null;
        }
        else{
-           System.out.println("sklfhsklfhskfh");
            return sb.serviceResult;
        }
    }
