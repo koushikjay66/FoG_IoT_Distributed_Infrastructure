@@ -9,7 +9,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import serverCommunication.Iniciar;
+import server.Iniciar;
 
 /**
  *

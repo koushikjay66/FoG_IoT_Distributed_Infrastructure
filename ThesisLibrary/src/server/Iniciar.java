@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package serverCommunication;
+package server;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -18,16 +18,21 @@ import java.util.logging.Logger;
 public  class Iniciar {
 
     public static String BOOTSTRAP_CLASS_NAME;
-    public static String HELPER_SERVER;
     public static String HELPER_SERVER_IP;
-
-    public Iniciar(String BOOTSTRAP_CLASS_NAME, String HELPER_SERVER, String HELPER_SERVER_IP) {
+    public static String[] SAME_FEATHERS_IP;
+    public static int NUMBER_OF_SAME_FEATHERS;
+    
+    public Iniciar(String BOOTSTRAP_CLASS_NAME, String HELPER_SERVER_IP, String SAME_FEATHER[]) {
         
         Iniciar.BOOTSTRAP_CLASS_NAME = BOOTSTRAP_CLASS_NAME;
-        Iniciar.HELPER_SERVER = HELPER_SERVER;
         Iniciar.HELPER_SERVER_IP = HELPER_SERVER_IP;
+        Iniciar.NUMBER_OF_SAME_FEATHERS=SAME_FEATHER.length;
         
-    }//End of Constructor 
+        Iniciar.SAME_FEATHERS_IP= new String[NUMBER_OF_SAME_FEATHERS];
+        
+        System.arraycopy(SAME_FEATHER, 0, Iniciar.SAME_FEATHERS_IP, 0, Iniciar.NUMBER_OF_SAME_FEATHERS);
+        
+    }//End of Constructor
 
     public static void initiate() {
         try {

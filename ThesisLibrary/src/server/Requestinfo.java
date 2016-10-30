@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package serverCommunication;
+package server;
 
 import java.io.IOException;
 import java.net.Socket;
@@ -27,7 +27,7 @@ public class Requestinfo {
      */
     public Requestinfo(){
         
-        this.ip=serverCommunication.Iniciar.HELPER_SERVER_IP;
+        this.ip=server.Iniciar.HELPER_SERVER_IP;
     }
     public Requestinfo(String ip) {
         this.ip = ip;
