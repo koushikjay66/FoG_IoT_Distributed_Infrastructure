@@ -27,7 +27,7 @@ public class Requestinfo {
      */
     public Requestinfo(){
         
-        this.ip=server.Iniciar.HELPER_SERVER_IP;
+        this.ip=server.Iniciar.PARENT_SERVER_IP;
     }
     public Requestinfo(String ip) {
         this.ip = ip;

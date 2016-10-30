@@ -15,24 +15,54 @@ import java.util.logging.Logger;
  *
  * @author Koushik
  */
-public  class Iniciar {
+public class Iniciar {
 
     public static String BOOTSTRAP_CLASS_NAME;
-    public static String HELPER_SERVER_IP;
+
+    /**
+     * The IP Address with port of the parent Server
+     */
+    public static String PARENT_SERVER_IP;
     public static String[] SAME_FEATHERS_IP;
     public static int NUMBER_OF_SAME_FEATHERS;
-    
-    public Iniciar(String BOOTSTRAP_CLASS_NAME, String HELPER_SERVER_IP, String SAME_FEATHER[]) {
-        
+    public static String DB_HOST;
+    public static String DB_USER;
+    public static String DB_PASS;
+    public static String DB_NAME;
+
+    public Iniciar(String BOOTSTRAP_CLASS_NAME) {
+        // Nothing to do here
+
         Iniciar.BOOTSTRAP_CLASS_NAME = BOOTSTRAP_CLASS_NAME;
-        Iniciar.HELPER_SERVER_IP = HELPER_SERVER_IP;
-        Iniciar.NUMBER_OF_SAME_FEATHERS=SAME_FEATHER.length;
+    }
+
+    public Iniciar parent(String PARENT_SERVER_IP) {
+        Iniciar.PARENT_SERVER_IP = PARENT_SERVER_IP;
+        return this;
+    }// End of function parent
+
+    public Iniciar mates(String SAME_FEATHER[]) {
         
-        Iniciar.SAME_FEATHERS_IP= new String[NUMBER_OF_SAME_FEATHERS];
-        
+        Iniciar.NUMBER_OF_SAME_FEATHERS = SAME_FEATHER.length;
+
+        Iniciar.SAME_FEATHERS_IP = new String[NUMBER_OF_SAME_FEATHERS];
+
         System.arraycopy(SAME_FEATHER, 0, Iniciar.SAME_FEATHERS_IP, 0, Iniciar.NUMBER_OF_SAME_FEATHERS);
         
-    }//End of Constructor
+        return this;
+    }// End of function parent
+    
+    public Iniciar database(String db_host, String db_user, String db_pass, String db_name){
+        Iniciar.DB_HOST=db_host;
+        Iniciar.DB_USER=db_user;
+        Iniciar.DB_PASS=db_pass;
+        Iniciar.DB_NAME=db_name;
+        return this;
+    }
+    
+    public void buildServer(){
+        
+    }
 
     public static void initiate() {
         try {
