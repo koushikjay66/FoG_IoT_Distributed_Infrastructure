@@ -9,6 +9,7 @@ import java.net.Socket;
 import json.Builder.ResponseBuilder;
 import json.ReqestedParsedObject;
 import json.parser;
+import server.sync.Leech;
 import service.Service;
 
 /**
@@ -46,6 +47,7 @@ public class Requestedinfo {
      *
      * @return true/ false depending on the things .
      */
+    
     public boolean analizeRequested() {
         parser p = new parser(requestedString);
         rpo = p.getIt();
@@ -67,6 +69,7 @@ public String generateResult() {
         Object [] ar = service.compile();
         
         if(ar==null){
+            Leech l = new Leech();
             Requestinfo rf = new Requestinfo();
             rf.sendData(requestedString);
             return rf.getReply();
