@@ -61,7 +61,7 @@ public class Iniciar {
     }
     
     public void buildServer(){
-        
+        System.out.println("Your server Configs are");
     }
 
     public static void initiate() {
@@ -77,4 +77,14 @@ public class Iniciar {
             Logger.getLogger(Iniciar.class.getName()).log(Level.SEVERE, null, ex);
         }
     }// End of class initiate
+    
+    /**
+     * 
+     * @return The string representation of the Server variables
+     */
+    @Override
+    public String toString(){
+        System.out.println(Iniciar.class.getDeclaredFields());
+        return null;
+    }
 }// End of class Iniciar

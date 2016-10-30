@@ -47,7 +47,6 @@ public class ResponseBuilder {
     
     private String basicServicesG(){
         String service="B.Service: {";
-        System.out.println(replyObject.length);
         for (int i = 0; i <replyObject.length ; i++) {
             service+="{ServiceName: "+((GenericReply)replyObject[i]).serviceName+", ";
             service+="value: "+((GenericReply)replyObject[i]).serviceValue+"}";

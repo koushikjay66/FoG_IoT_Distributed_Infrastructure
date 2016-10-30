@@ -36,7 +36,7 @@ public class mysql {
     public mysql(String sql, String QueryType) {
         try {
             conn
-                    = DriverManager.getConnection("jdbc:mysql://localhost/services_db?"
+                    = DriverManager.getConnection("jdbc:mysql://172.16.34.37/services_db?"
                             + "user=root&password=");
 
             processQuery(sql, QueryType);
