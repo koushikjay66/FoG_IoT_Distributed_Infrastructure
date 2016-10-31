@@ -11,7 +11,6 @@ import java.lang.reflect.Field;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.SocketAddress;
 import java.net.UnknownHostException;
 import java.util.Arrays;
 import java.util.Scanner;
@@ -29,6 +28,7 @@ public class Iniciar {
     /**
      * The IP Address with port of the parent Server
      */
+    private final String commands[]={"stop -> To Stop the server", "var -> To Print the server variable"};
     public static String PARENT_SERVER_IP;
     public static String[] SAME_FEATHERS_IP;
     public static int NUMBER_OF_SAME_FEATHERS;
@@ -97,32 +97,43 @@ public class Iniciar {
         return build_status;
     }
 
-    public static void initiate() {
+    public final void initiate() {
         System.out.println("\u001B[33m" + "Server is now starting up ." + "\u001B[0m");
+        if(!build_status){
+            System.out.println("Please Rebuild the server variables. There were some problems");
+            System.exit(0);
+        }
         Thread thread;
-        thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    ServerSocket ss = new ServerSocket(1140);
+        thread = new Thread(() -> {
+            try {
+                ServerSocket ss = new ServerSocket(1140);
 
-                    while (true) {
-                        Socket s = ss.accept();
-                        Threads t = new Threads(s.getRemoteSocketAddress().toString(), s);
-                        t.start();
-                    }
-                } catch (IOException ex) {
-                    Logger.getLogger(Iniciar.class.getName()).log(Level.SEVERE, null, ex);
+                while (true) {
+                    Socket s = ss.accept();
+                    Threads t = new Threads(s.getRemoteSocketAddress().toString(), s);
+                    t.start();
                 }
+            } catch (IOException ex) {
+                Logger.getLogger(Iniciar.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
         thread.start();
         System.out.println("Successfully Started Server. \"stop\" to Stop the server");
-        
+
         Scanner lab = new Scanner(System.in);
-        while(lab.next().equals("stop")){
-            System.out.println("Good Bye");
-            System.exit(0);
+        String t;
+        while (true) {
+            t = lab.next();
+            if (t.equalsIgnoreCase("stop")) {
+                System.out.println("Good Bye");
+                System.exit(0);
+            }else if(t.equalsIgnoreCase("var")){
+               
+                toString();
+            }else{
+                System.out.println(Arrays.toString(commands));;
+            }
+
         }
 
     }// End of class initiate
@@ -134,8 +145,7 @@ public class Iniciar {
     @Override
     public String toString() {
         String var;
-
-        for (Field f : this.getClass().getDeclaredFields()) {
+        for (Field f : this.getClass().getFields()) {
             try {
                 var = f.toGenericString();
                 var = var.substring(var.lastIndexOf(".") + 1);
