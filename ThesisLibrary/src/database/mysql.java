@@ -33,6 +33,22 @@ public class mysql {
      * @param sql
      * @param QueryType
      */
+    public mysql(String host, String user, String pass, String db_name){
+        try{
+            String c = "jdbc:mysql://" + host + "//" + db_name + "?user=" + user + "&password=" + pass;
+           conn=DriverManager.getConnection(c);
+            System.out.println("Connection to Database Was Successfull. Database also Exists");
+        }catch(SQLException e){
+            System.out.println(e.getMessage());; 
+        }
+        finally{
+            try {
+                conn.close();
+            } catch (SQLException ex) {
+                System.out.println("Cant Close Connection");;
+            }
+        }
+    }
     public mysql(String sql, String QueryType) {
         try {
             conn
