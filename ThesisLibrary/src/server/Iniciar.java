@@ -12,6 +12,7 @@ import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Scanner;
 import java.util.logging.Level;
@@ -28,7 +29,7 @@ public class Iniciar {
     /**
      * The IP Address with port of the parent Server
      */
-    private final String commands[]={"stop -> To Stop the server", "var -> To Print the server variable"};
+    private final String commands[] = {"stop -> To Stop the server", "var -> To Print the server variable"};
     public static String PARENT_SERVER_IP;
     public static String[] SAME_FEATHERS_IP;
     public static int NUMBER_OF_SAME_FEATHERS;
@@ -70,8 +71,8 @@ public class Iniciar {
 
     public boolean buildServer() {
 
-        System.out.println("Your server Configs are");
         try {
+
             Class.forName(BOOTSTRAP_CLASS_NAME);
             InetAddress address = InetAddress.getByName(PARENT_SERVER_IP);
             if (address.isReachable(2000)) {
@@ -79,7 +80,9 @@ public class Iniciar {
             } else {
                 throw new Exception("Request timed out!");
             }
-            mysql my = new mysql(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+
+            server_db_helper s = new server_db_helper();
+            s.bootstrap_db_info();
         } catch (ClassNotFoundException ex) {
             System.out.println("\u001B[31m" + "Your boot strap class is not Found! Make sure you entered class with package Name" + "\u001B[0m");
             return build_status;
@@ -99,7 +102,7 @@ public class Iniciar {
 
     public final void initiate() {
         System.out.println("\u001B[33m" + "Server is now starting up ." + "\u001B[0m");
-        if(!build_status){
+        if (!build_status) {
             System.out.println("Please Rebuild the server variables. There were some problems");
             System.exit(0);
         }
@@ -127,10 +130,10 @@ public class Iniciar {
             if (t.equalsIgnoreCase("stop")) {
                 System.out.println("Good Bye");
                 System.exit(0);
-            }else if(t.equalsIgnoreCase("var")){
-               
+            } else if (t.equalsIgnoreCase("var")) {
+
                 toString();
-            }else{
+            } else {
                 System.out.println(Arrays.toString(commands));;
             }
 
@@ -160,5 +163,31 @@ public class Iniciar {
             }
         }
         return null;
-    }
+    }// End of method toString
+
+    
+    
+    
+    
+    
+    private class server_db_helper {
+
+        private final mysql m;
+        private final String show_tables;
+
+        private server_db_helper() {
+            System.out.println("Entered Info FUnc");
+            this.m = new mysql(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+            this.show_tables = "SELECT * FROM COMPLEX_SERVICE";
+        }
+
+        private void bootstrap_db_info() throws SQLException {
+            m.processQuery(this.show_tables);
+            for (Object i : m.res.keySet()) {
+                System.out.println(i + "-> " + m.res.get(i));
+            }
+        }
+    }// End of Inner class server_db_helper 
+    
+    
 }// End of class Iniciar

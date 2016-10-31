@@ -30,25 +30,23 @@ public class mysql {
 
     /**
      * This Constructor is only initializes connection
+     *
      * @param sql
      * @param QueryType
      */
-    public mysql(String host, String user, String pass, String db_name){
-        try{
+    public mysql(String host, String user, String pass, String db_name) {
+        try {
             String c = "jdbc:mysql://" + host + "/" + db_name + "?user=" + user + "&password=" + pass;
-           conn=DriverManager.getConnection(c);
+            conn = DriverManager.getConnection(c);
             System.out.println("Connection to Database Was Successfull. Database also Exists");
-        }catch(SQLException e){
-            System.out.println(e.getMessage());; 
-        }
-        finally{
-            try {
-                conn.close();
-            } catch (SQLException ex) {
-                System.out.println("Cant Close Connection");;
-            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());;
+        } finally {
+            //  conn.close();
+            
         }
     }
+
     public mysql(String sql, String QueryType) {
         try {
             conn
@@ -60,10 +58,11 @@ public class mysql {
             Logger.getLogger(mysql.class.getName()).log(Level.SEVERE, null, ex);
         }
     }// End of this constructor
-    public mysql(String sql, String QueryType, String tableName){
+
+    public mysql(String sql, String QueryType, String tableName) {
         try {
             conn
-                    = DriverManager.getConnection("jdbc:mysql://localhost/"+tableName+"?"
+                    = DriverManager.getConnection("jdbc:mysql://localhost/" + tableName + "?"
                             + "user=root&password=");
 
             processQuery(sql, QueryType);
@@ -71,8 +70,6 @@ public class mysql {
             Logger.getLogger(mysql.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    
 
     public mysql(String uri, String user, String password, String db_name, String sql, String QueryType) {
 
@@ -100,14 +97,14 @@ public class mysql {
             result = st.getResultSet();
             if (result != null) {
                 ResultSetMetaData rsmd = result.getMetaData();
-                res= new HashMap<>();
+                res = new HashMap<>();
                 int total_col = rsmd.getColumnCount();
                 String temp[] = new String[total_col];
                 for (int i = 0; i < total_col; i++) {
-                    
+
                     temp[i] = rsmd.getColumnName(i + 1);
                     res.put(temp[i], new ArrayList());
-                    
+
                 }
                 while (result.next()) {
                     for (int i = 0; i < total_col; i++) {
@@ -139,5 +136,16 @@ public class mysql {
         }
 
     }
+
+    public void processQuery(String sql) throws SQLException {
+        
+        String QueryType = sql.substring(0, sql.lastIndexOf(" "));
+        if (QueryType.equalsIgnoreCase("SELECT")) {
+            executeSelect(sql);
+        } else {
+            System.out.println(sql);
+            executeOthers(sql);
+        }
+    }// End of method
 
 }
