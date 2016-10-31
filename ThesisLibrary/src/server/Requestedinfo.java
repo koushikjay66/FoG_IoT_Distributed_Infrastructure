@@ -8,7 +8,7 @@ package server;
 import java.net.Socket;
 import json.Builder.ResponseBuilder;
 import json.ReqestedParsedObject;
-import json.parser;
+import json.Requestparser;
 import server.sync.Leech;
 import service.Service;
 
@@ -33,7 +33,6 @@ public class Requestedinfo {
         possibleOrNot = analizeRequested();
 
     }// End of constructor
-    
 
     /**
      * This method analyzes the requested String. if The request result can be
@@ -47,15 +46,14 @@ public class Requestedinfo {
      *
      * @return true/ false depending on the things .
      */
-    
     public boolean analizeRequested() {
-        parser p = new parser(requestedString);
+        Requestparser p = new Requestparser(requestedString);
         rpo = p.getIt();
         return true;
     }// End of method analizeResult
 
-public String generateResult() {
-            if (!possibleOrNot) {
+    public String generateResult() {
+        if (!possibleOrNot) {
             return "Invalid Request";
         }
 
@@ -66,15 +64,13 @@ public String generateResult() {
             service = new Service(rpo.serviceName, rpo.optionalParam);
         }
         // Service compile if returns nulll then it is time to call the agent
-        Object [] ar = service.compile();
-        
-        if(ar==null){
-            Leech l = new Leech();
-            Requestinfo rf = new Requestinfo();
-            rf.sendData(requestedString);
-            return rf.getReply();
-        }
-        else {
+        Object[] ar = service.compile();
+
+        if (ar == null) {
+            Leech l = new Leech(rpo);
+
+            return l.startLeeching(requestedString);
+        } else {
             ResponseBuilder rb = new ResponseBuilder(ar, rpo.token);
             return rb.compile();
         }

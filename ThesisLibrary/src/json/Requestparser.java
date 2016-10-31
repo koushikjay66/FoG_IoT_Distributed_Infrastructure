@@ -13,17 +13,17 @@ import java.util.regex.Pattern;
  *
  * @author Koushik
  */
-public class parser {
+public class Requestparser {
     
     private final String JSON;
     
-    public parser(String JSON){
+    public Requestparser(String JSON){
         if(JSON.equals(null)){
             throw new NullPointerException("JSON is empty");
         }
         this.JSON=JSON;
        
-    }// End of constructor parser
+    }// End of constructor Requestparser
     
     public ReqestedParsedObject getIt(){
         Pattern p = Pattern.compile("(^(\"(REQ|RES)\") : \\{(\"([a-z]*)\") : \\{(\"([\\w]*)\"): (\"([a-z|A-Z|0-9]*)\"), "
