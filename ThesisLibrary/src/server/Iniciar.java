@@ -5,6 +5,7 @@
  */
 package server;
 
+import database.mysql;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.net.InetAddress;
@@ -13,6 +14,7 @@ import java.net.Socket;
 import java.net.SocketAddress;
 import java.net.UnknownHostException;
 import java.util.Arrays;
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -34,6 +36,7 @@ public class Iniciar {
     public static String DB_USER;
     public static String DB_PASS;
     public static String DB_NAME;
+    private boolean build_status;
 
     public Iniciar(String BOOTSTRAP_CLASS_NAME) {
         // Nothing to do here
@@ -65,42 +68,63 @@ public class Iniciar {
         return this;
     }
 
-    public Iniciar buildServer() {
+    public boolean buildServer() {
 
         System.out.println("Your server Configs are");
         try {
             Class.forName(BOOTSTRAP_CLASS_NAME);
-            InetAddress address = InetAddress.getByAddress(PARENT_SERVER_IP.getBytes());
+            InetAddress address = InetAddress.getByName(PARENT_SERVER_IP);
             if (address.isReachable(2000)) {
                 System.out.println("Parent Server is working Successfully");
             } else {
                 throw new Exception("Request timed out!");
             }
+            mysql my = new mysql(DB_HOST, DB_USER, DB_PASS, DB_NAME);
         } catch (ClassNotFoundException ex) {
             System.out.println("\u001B[31m" + "Your boot strap class is not Found! Make sure you entered class with package Name" + "\u001B[0m");
+            return build_status;
         } catch (UnknownHostException ex) {
             System.out.println("Unknow Host for parent Address");
+            return build_status;
         } catch (IOException ex) {
             System.out.println("Checkout your port for this server . Cannot ping to that server");
+            return build_status;
         } catch (Exception ex) {
             System.out.println(ex);
+            return build_status;
         }
-
-        return this;
+        build_status = true;
+        return build_status;
     }
 
     public static void initiate() {
-        try {
-            ServerSocket ss = new ServerSocket(1140);
+        System.out.println("\u001B[33m" + "Server is now starting up ." + "\u001B[0m");
+        Thread thread;
+        thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    ServerSocket ss = new ServerSocket(1140);
 
-            while (true) {
-                Socket s = ss.accept();
-                Threads t = new Threads(s.getRemoteSocketAddress().toString(), s);
-                t.start();
+                    while (true) {
+                        Socket s = ss.accept();
+                        Threads t = new Threads(s.getRemoteSocketAddress().toString(), s);
+                        t.start();
+                    }
+                } catch (IOException ex) {
+                    Logger.getLogger(Iniciar.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
-        } catch (IOException ex) {
-            Logger.getLogger(Iniciar.class.getName()).log(Level.SEVERE, null, ex);
+        });
+        thread.start();
+        System.out.println("Successfully Started Server. \"stop\" to Stop the server");
+        
+        Scanner lab = new Scanner(System.in);
+        while(lab.next().equals("stop")){
+            System.out.println("Good Bye");
+            System.exit(0);
         }
+
     }// End of class initiate
 
     /**

@@ -35,7 +35,7 @@ public class mysql {
      */
     public mysql(String host, String user, String pass, String db_name){
         try{
-            String c = "jdbc:mysql://" + host + "//" + db_name + "?user=" + user + "&password=" + pass;
+            String c = "jdbc:mysql://" + host + "/" + db_name + "?user=" + user + "&password=" + pass;
            conn=DriverManager.getConnection(c);
             System.out.println("Connection to Database Was Successfull. Database also Exists");
         }catch(SQLException e){
