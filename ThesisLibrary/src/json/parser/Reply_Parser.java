@@ -13,8 +13,10 @@ import java.util.regex.Pattern;
  * @author Koushik
  */
 public class Reply_Parser {
+    
     public String token;
     private final String JSON;
+    
 
     public Reply_Parser(String JSON) {
         if (JSON.equals(null)) {
@@ -26,18 +28,25 @@ public class Reply_Parser {
     public Reply_Parser getIt(){
         
         final String pattern;
-        pattern = "^\\{(Token): ((\\S)*),"
+        pattern = "^\\{(Token): (\"(\\S)*\"),"
                 + "(B.Service): \\{((\\{"
-                + "((ServiceName): ((\\S)*), (value): ((\\S)*))"
-                + "\\})*)\\}$";
+                + "((ServiceName): ([\\S]*), (value): ((\\S)*))"
+                + "\\})*)\\}\\}$";
         
         Pattern p = Pattern.compile(pattern);
         
         Matcher m = p.matcher(this.JSON);
         
         while(m.find()){
-            System.out.println(m.group(14));
+            if(m.group(1).equals("Token")){
+                this.token=m.group(3);
+                System.out.println(this.token);
+            }
+            
         }
+//        while(m.find()){
+//            System.out.println(m.group(2));
+//        }
         return this;
     
     }// End of method

@@ -81,10 +81,11 @@ public class Iniciar {
                 throw new Exception("Request timed out!");
             }
 
-            server_db_helper s = new server_db_helper();
-            s.bootstrap_db_info();
+            //server_db_helper s = new server_db_helper();
+            //s.bootstrap_db_info();
+            mysql m = new mysql(DB_HOST, DB_USER, DB_PASS, DB_NAME);
         } catch (ClassNotFoundException ex) {
-            System.out.println("\u001B[31m" + "Your boot strap class is not Found! Make sure you entered class with package Name" + "\u001B[0m");
+            System.out.println("Your boot strap class is not Found! Make sure you entered class with package Name");
             return build_status;
         } catch (UnknownHostException ex) {
             System.out.println("Unknow Host for parent Address");
