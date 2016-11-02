@@ -116,9 +116,9 @@ public final class mysql {
         Object t;
         String QueryType = sql.substring(0, sql.indexOf(" "));
         if (QueryType.equalsIgnoreCase("SELECT") || QueryType.equalsIgnoreCase("SHOW")) {
-            t=execute(sql);
+            t = execute(sql);
         } else {
-            t=execute(sql, true);
+            t = execute(sql, true);
         }
         return t;
     }// End of method

@@ -5,6 +5,9 @@
  */
 package json.parser;
 
+import com.google.gson.Gson;
+import server.Iniciar;
+
 /**
  *
  * @author Koushik
@@ -12,12 +15,36 @@ package json.parser;
 public class terter_reply_parser {
 
     public static void main(String args[]) {
-        String JSON= "{\"Token\": \"2b2c5f9e6655ce42740584f4c25c85b6\",\"B_Service\": [{\"ServiceName\": \"kelu\", \"Value\": \"13101206\"}, {\"ServiceName\": \"light\", \"Value\": \"10\"}]}";
+        String JSON="{\n" +
+"    \"Token\" : \"Here will go the token \", \n" +
+"    \"C_Service\" :[\n" +
+"                    {\"csid\" : \"csid\", \"cs_name\" : \"CS NAME HERE\" , \"cs_provider\" : \"provider name here\"\n" +
+"                    }       \n" +
+"                ],\n" +
+"    \"B_Service\" : [\n" +
+"                    {\n" +
+"                        \"Ss_id\": \"13101206\", \"Ss_name\" : \"koushik\", \"ss_value\": \"bulala\", \"ss_protocal\": \"http\", \"ss_url\": \"http://google.com\", \"ss_ttl\": \"1306\", \"ss_timestamp\": \"timestamp here\"\n" +
+"                    },\n" +
+"                    {\n" +
+"                        \"Ss_id\": \"13101209\", \"Ss_name\" : \"koushik\", \"ss_value\": \"bulala\", \"ss_protocal\": \"http\", \"ss_url\": \"http://google.com\", \"ss_ttl\": \"1306\", \"ss_timestamp\": \"timestamp here\"\n" +
+"                    }\n" +
+"                  ]\n" +
+"\n" +
+"}";
         Reply_Parser rp = new Reply_Parser(JSON);
-        rp=rp.getIt();
+        Object  t= rp.getIt();
         System.out.println(rp.B_Service[0].ServiceName);
         System.out.println(rp.B_Service[0].Value);
         
         System.out.println(rp.B_Service.length);
+
+//    
+//        Gson g = new Gson();
+//        main m =g.fromJson(JSON, main.class);
+//        
+//        for (int i = 0; i < m.B_Service.length; i++) {
+//            System.out.println(m.B_Service[i].Ss_id);
+//        }
+    
     }
 }

@@ -6,13 +6,13 @@
 package json.parser;
 
 import com.google.gson.Gson;
+import server.Iniciar;
 
 /**
  * I love Google . GSON is so easy to use and fast . =D =D
  * @author Koushik
  */
 public class Reply_Parser {
-    
     private final Gson g;
     private final String JSON;
     
@@ -29,9 +29,9 @@ public class Reply_Parser {
         this.JSON = JSON;
     }// End of constructor
 
-    public Reply_Parser getIt(){
+    public Object getIt(){
         
-        return g.fromJson(JSON, Reply_Parser.class);
+        return  g.fromJson(JSON, Iniciar.parsing);
     
     }// End of method
     

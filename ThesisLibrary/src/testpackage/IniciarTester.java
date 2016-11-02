@@ -5,7 +5,6 @@
  */
 package testpackage;
 
-import java.io.File;
 import java.util.Scanner;
 import server.Iniciar;
 
@@ -31,7 +30,7 @@ public class IniciarTester {
         System.out.print("\nDB_Name: ");
         String db_name="services_db";
         Iniciar i = new Iniciar("server.Iniciar")
-                .parent(parent).mates(mates).database(db_host, db_user, db_pass, db_name);
+                .parent(parent).mates(mates).database(db_host, db_user, db_pass, db_name).build_parser("json.parser.main");
         
         if(i.buildServer()){
            i.initiate();

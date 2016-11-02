@@ -12,6 +12,7 @@ package json.Builder;
  * @author Koushik
  */
 public class ResponseBuilder {
+    
     private String token;
     private Object [] replyObject;
     

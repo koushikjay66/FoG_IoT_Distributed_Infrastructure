@@ -23,9 +23,9 @@ import java.util.logging.Logger;
  * @author Koushik
  */
 public class Iniciar {
-
+    
     public static String BOOTSTRAP_CLASS_NAME;
-
+    public static Class parsing;
     /**
      * The IP Address with port of the parent Server
      */
@@ -39,26 +39,26 @@ public class Iniciar {
     public static String DB_PASS;
     public static String DB_NAME;
     private boolean build_status;
-
+    
     public Iniciar(String BOOTSTRAP_CLASS_NAME) {
         // Nothing to do here
 
         Iniciar.BOOTSTRAP_CLASS_NAME = BOOTSTRAP_CLASS_NAME;
     }
-
+    
     public Iniciar parent(String PARENT_SERVER_IP) {
         Iniciar.PARENT_SERVER_IP = PARENT_SERVER_IP;
         return this;
     }// End of function parent
 
     public Iniciar mates(String SAME_FEATHER[]) {
-
+        
         Iniciar.NUMBER_OF_SAME_FEATHERS = SAME_FEATHER.length;
-
+        
         Iniciar.SAME_FEATHERS_IP = new String[NUMBER_OF_SAME_FEATHERS];
-
+        
         System.arraycopy(SAME_FEATHER, 0, Iniciar.SAME_FEATHERS_IP, 0, Iniciar.NUMBER_OF_SAME_FEATHERS);
-
+        
         return this;
     }// End of function parent
 
@@ -69,11 +69,21 @@ public class Iniciar {
         Iniciar.DB_NAME = db_name;
         return this;
     }
+    
+    public Iniciar build_parser(String parser_class_name) {
+        try {
+            Iniciar.parsing = Class.forName(parser_class_name);
+        } catch (ClassNotFoundException ex) {
+            System.out.println("Parser Class Not Found");
+            System.exit(0);
+        }
+        return this;
+    }
 
     public boolean buildServer() {
-
+        
         try {
-
+            
             Class.forName(BOOTSTRAP_CLASS_NAME);
             InetAddress address = InetAddress.getByName(PARENT_SERVER_IP);
             if (address.isReachable(2000)) {
@@ -81,7 +91,7 @@ public class Iniciar {
             } else {
                 throw new Exception("Request timed out!");
             }
-
+            
             server_db_helper s = new server_db_helper();
             s.bootstrap_db_info();
 //            mysql_old m = new mysql_old(DB_HOST, DB_USER, DB_PASS, DB_NAME);
@@ -101,7 +111,7 @@ public class Iniciar {
         build_status = true;
         return build_status;
     }
-
+    
     public final void initiate() {
         System.out.println("\u001B[33m" + "Server is now starting up ." + "\u001B[0m");
         if (!build_status) {
@@ -112,7 +122,7 @@ public class Iniciar {
         thread = new Thread(() -> {
             try {
                 ServerSocket ss = new ServerSocket(1140);
-
+                
                 while (true) {
                     Socket s = ss.accept();
                     Threads t = new Threads(s.getRemoteSocketAddress().toString(), s);
@@ -124,7 +134,7 @@ public class Iniciar {
         });
         thread.start();
         System.out.println("Successfully Started Server. \"stop\" to Stop the server");
-
+        
         Scanner lab = new Scanner(System.in);
         String t;
         while (true) {
@@ -133,14 +143,14 @@ public class Iniciar {
                 System.out.println("Good Bye");
                 System.exit(0);
             } else if (t.equalsIgnoreCase("var")) {
-
+                
                 toString();
             } else {
                 System.out.println(Arrays.toString(commands));;
             }
-
+            
         }
-
+        
     }// End of class initiate
 
     /**
@@ -159,7 +169,7 @@ public class Iniciar {
                 } else {
                     System.out.println(var + "-> " + f.get(f));
                 }
-
+                
             } catch (IllegalArgumentException | IllegalAccessException ex) {
                 Logger.getLogger(Iniciar.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -168,20 +178,17 @@ public class Iniciar {
     }// End of method toString
 
     private class server_db_helper {
-
+        
         private final mysql m;
         private final String show_tables;
-
+        
         private server_db_helper() {
             this.m = new mysql(DB_HOST, DB_USER, DB_PASS, DB_NAME);
             this.show_tables = "SHOW tables";
         }
-
+        
         private void bootstrap_db_info() throws SQLException {
-            m.processQuery(this.show_tables);
-            for (Object i : m.res.keySet()) {
-                System.out.println(i + "-> " + m.res.get(i));
-            }
+            
         }
     }// End of Inner class server_db_helper 
 

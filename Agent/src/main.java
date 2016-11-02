@@ -1,41 +1,39 @@
+
+import java.util.Scanner;
+import server.Iniciar;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package servercommunication;
-
-import java.io.IOException;
-import java.net.ServerSocket;
-import java.net.Socket;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
- * @author Arshad
+ * @author Arshad Hossain
  */
 public class main {
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        bootstrap();
-    }
-
-    public static void bootstrap() {
-        try {
-            ServerSocket ss = new ServerSocket(1140);
-
-            while (true) {
-                Socket s = ss.accept();
-                Threads t = new Threads(s.getRemoteSocketAddress().toString(), s);
-                t.start();
-            }
-        } catch (IOException ex) {
-            Logger.getLogger(main.class.getName()).log(Level.SEVERE, null, ex);
+      public static void main(String args[]){
+        
+        Scanner lab = new Scanner(System.in);
+        System.out.print("Who is my First Ex ? RAIYAN !!! =D : ");
+        String parent= "172.16.34.2";
+        System.out.print("\nWho are my friends(seperate with comma): ");
+        String mates[]="sklfhsiofh, ksfhskfhsklfh".split(",");
+         System.out.print("\nWhat is my db host: ");
+        String db_host="localhost";
+        System.out.print("\nDB_USER: ");
+        String db_user= "root";
+        System.out.print("\nDB_Pass: ");
+        String db_pass="";
+        System.out.print("\nDB_Name: ");
+        String db_name="services_db";
+        
+        Iniciar i = new Iniciar("agent.ReplyAgent")
+                .parent(parent).mates(mates).database(db_host, db_user, db_pass, db_name);
+        
+        if(i.buildServer()){
+           i.initiate();
         }
-    }// End of bootstrap class
-
+    }
 }

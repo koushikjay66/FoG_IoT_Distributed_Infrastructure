@@ -6,6 +6,7 @@
 package agent;
 
 import database.mysql;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -24,6 +25,7 @@ import java.util.concurrent.Future;
  * @author arsha
  */
 public class updateAgent {
+    private final mysql result = new mysql();
     public static Map<String,String> ttlmap = new HashMap();
     public static Map<String,String> timestampmap = new HashMap();
     
@@ -132,12 +134,13 @@ public class updateAgent {
 //    }
     
     String [] prionames;
-    public void increasePriority(String serviceName){
+    
+    public void increasePriority(String serviceName) throws SQLException{
         String sql = "SELECT cs_name FROM complex_service ORDER BY cs_update_count DESC";
-        mysql result = new mysql(sql , "SELECT", "agent_lookup_table");
         
-        for (Object i: result.res.keySet()) {
-            String basics = result.res.get(i).toString().substring(1, result.res.get(i).toString().length()-1);
+        HashMap res =  (HashMap)result.processQuery(sql);
+        for (Object i: res.keySet()) {
+            String basics = res.get(i).toString().substring(1, res.get(i).toString().length()-1);
             prionames = basics.split(", ");
         }
         for (int i = 0; i < prionames.length; i++) {
@@ -147,9 +150,10 @@ public class updateAgent {
     
     
     
-    public void changePriority(String serviceName, int i){
+    public void changePriority(String serviceName, int i) throws SQLException{
         String sql = "UPDATE complex_service SET cs_priority="+i+" WHERE cs_name=\""+serviceName+"\"";
-         mysql result = new mysql(sql, "UPDATE", "agent_lookup_table");
+         int x=(int)result.processQuery(sql);
+         
     }//End of changePriority
     
 }

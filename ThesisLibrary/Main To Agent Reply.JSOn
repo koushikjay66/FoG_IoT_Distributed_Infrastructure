@@ -1,0 +1,16 @@
+{
+    "Token" : "Here will go the token ", 
+    "C_Service" :[
+                    {"csid" : "csid", "cs_name" : "CS NAME HERE" , "cs_provider" : "provider name here"
+                    }       
+                ],
+    "B_Service" : [
+                    {
+                        "Ss_id": "13101206", "Ss_name" : "koushik", "ss_value": "bulala", "ss_protocal": "http", "ss_url": "http://google.com", "ss_ttl": "1306", "ss_timestamp": "timestamp here"
+                    },
+                    {
+                        "Ss_id": "13101209", "Ss_name" : "koushik", "ss_value": "bulala", "ss_protocal": "http", "ss_url": "http://google.com", "ss_ttl": "1306", "ss_timestamp": "timestamp here"
+                    }
+                  ]
+
+}
