@@ -29,6 +29,7 @@ public class Iniciar {
     /**
      * The IP Address with port of the parent Server
      */
+    
     private final String commands[] = {"stop -> To Stop the server", "var -> To Print the server variable"};
     public static String PARENT_SERVER_IP;
     public static String[] SAME_FEATHERS_IP;
@@ -166,18 +167,12 @@ public class Iniciar {
         return null;
     }// End of method toString
 
-    
-    
-    
-    
-    
     private class server_db_helper {
 
         private final mysql m;
         private final String show_tables;
 
         private server_db_helper() {
-            System.out.println("Entered Info FUnc");
             this.m = new mysql(DB_HOST, DB_USER, DB_PASS, DB_NAME);
             this.show_tables = "SHOW tables";
         }
@@ -189,6 +184,5 @@ public class Iniciar {
             }
         }
     }// End of Inner class server_db_helper 
-    
-    
+
 }// End of class Iniciar

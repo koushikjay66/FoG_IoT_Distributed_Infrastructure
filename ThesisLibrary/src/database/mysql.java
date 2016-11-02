@@ -5,92 +5,70 @@
  */
 package database;
 
-import java.sql.Statement;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import server.Iniciar;
 
 /**
  *
  * @author Koushik
  */
-public class mysql {
+public final class mysqlnew {
+
+    /**
+     * Final variables will be
+     */
+    private final String DB_HOST;
+    private final String DB_USER;
+    private final String DB_PASS;
+    private final String DB_NAME;
+    private final String DB_URL;
 
     private Connection conn;
-    private Statement st;
+    private  Statement st;
     private ResultSet result;
-    public int changed = -1;
+
+    private int changed = -1;
     public HashMap res;
 
-    /**
-     * This Constructor is only initializes connection
-     *
-     * @param sql
-     * @param QueryType
-     */
-    public mysql(String host, String user, String pass, String db_name) {
-        try {
-            String c = "jdbc:mysql://" + host + "/" + db_name + "?user=" + user + "&password=" + pass;
-            System.out.println(c);
-            conn = DriverManager.getConnection(c);
-            System.out.println("Connection to Database Was Successfull. Database also Exists");
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());;
-        } finally {
-            //  conn.close();
+    public mysqlnew() {
+        this.DB_HOST = Iniciar.DB_HOST;
+        this.DB_USER = Iniciar.DB_USER;
+        this.DB_PASS = Iniciar.DB_PASS;
+        this.DB_NAME = Iniciar.DB_NAME;
+        this.DB_URL = url_builder();
+    }// End of no argument Constructor
 
-        }
-    }
-
-    public mysql(String sql, String QueryType) {
-        try {
-            conn
-                    = DriverManager.getConnection("jdbc:mysql://localhost/services_db?"
-                            + "user=root&password=");
-
-            processQuery(sql, QueryType);
-        } catch (SQLException ex) {
-            Logger.getLogger(mysql.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }// End of this constructor
-
-    public mysql(String sql, String QueryType, String tableName) {
-        try {
-            conn
-                    = DriverManager.getConnection("jdbc:mysql://localhost/" + tableName + "?"
-                            + "user=root&password=");
-
-            processQuery(sql, QueryType);
-        } catch (SQLException ex) {
-            Logger.getLogger(mysql.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public mysql(String uri, String user, String password, String db_name, String sql, String QueryType) {
-
-        String c = "jdbc:mysql://" + uri + "//" + db_name + "?user=" + user + "&password=" + password;
-        try {
-            conn = DriverManager.getConnection(c);
-            processQuery(sql, QueryType);
-        } catch (SQLException ex) {
-            Logger.getLogger(mysql.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    public mysqlnew(String host, String user, String pass, String db_name) {
+        this.DB_HOST = host;
+        this.DB_USER = user;
+        this.DB_PASS = pass;
+        this.DB_NAME = db_name;
+        this.DB_URL = url_builder();
     }// End of constructor
 
-    /**
-     *
-     *
-     * @param sql The SQL to execute
-     * @return the result set for your query
-     * @throws java.sql.SQLException
-     */
-    private void executeSelect(String sql) throws SQLException {
+    private String url_builder() {
+        return "jdbc:mysql://" + DB_HOST + "/" + DB_NAME + "?user=" + DB_USER + "&password=" + DB_PASS;
+    }
+
+    private void openConnection() throws SQLException {
+        this.conn = DriverManager.getConnection(this.DB_URL);
+    }
+
+    private void closeConnection() throws SQLException {
+        if (result != null) {
+            result.close();
+        }
+        conn.close();
+    }
+
+    private  void executeSelect(String sql) throws SQLException {
 
         st = conn.createStatement();
         if (st.execute(sql)) {
@@ -117,7 +95,7 @@ public class mysql {
         }
     }
 
-    private void executeOthers(String sql) throws SQLException {
+    private  void executeOthers(String sql) throws SQLException {
 
         st = conn.createStatement();
         if (st.execute(sql)) {
@@ -127,16 +105,7 @@ public class mysql {
 
     }
 
-    private void processQuery(String sql, String QueryType) throws SQLException {
-        if (QueryType.equalsIgnoreCase("SELECT")) {
-            executeSelect(sql);
-        } else {
-            executeOthers(sql);
-        }
-
-    }
-
-    public void processQuery(String sql) throws SQLException {
+    public  void processQuery(String sql) throws SQLException {
 
         String QueryType = sql.substring(0, sql.indexOf(" "));
         System.out.println(QueryType);
@@ -144,9 +113,15 @@ public class mysql {
             System.out.println("baal");
             executeSelect(sql);
         } else {
-            System.out.println(sql);
             executeOthers(sql);
         }
     }// End of method
-
-}
+    
+    public HashMap result(){
+        return res;
+    }// End of function
+    
+    public int changedCount(){
+        return changed;
+    }
+}// End of class new MySql
