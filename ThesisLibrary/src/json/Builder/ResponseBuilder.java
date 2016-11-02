@@ -46,7 +46,7 @@ public class ResponseBuilder {
     }// End of finction tokenG
     
     private String basicServicesG(){
-        String service="\"B_Service\": ]";
+        String service="\"B_Service\": [";
         for (int i = 0; i <replyObject.length ; i++) {
             service+="{\"ServiceName\": \""+((GenericReply)replyObject[i]).serviceName+"\", ";
             service+="\"Value\": \""+((GenericReply)replyObject[i]).serviceValue+"\"}, ";
