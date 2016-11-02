@@ -5,20 +5,24 @@
  */
 package json.parser;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import com.google.gson.Gson;
 
 /**
- *
+ * I love Google . GSON is so easy to use and fast . =D =D
  * @author Koushik
  */
 public class Reply_Parser {
     
-    public String token;
+    private final Gson g;
     private final String JSON;
+    
+    
+    public String Token;
+    public B_Service_Object  B_Service[];
     
 
     public Reply_Parser(String JSON) {
+        g= new Gson();
         if (JSON.equals(null)) {
             throw new NullPointerException("JSON is empty");
         }
@@ -27,28 +31,14 @@ public class Reply_Parser {
 
     public Reply_Parser getIt(){
         
-        final String pattern;
-        pattern = "^\\{(Token): (\"(\\S)*\"),"
-                + "(B.Service): \\{((\\{"
-                + "((ServiceName): ([\\S]*), (value): ((\\S)*))"
-                + "\\})*)\\}\\}$";
-        
-        Pattern p = Pattern.compile(pattern);
-        
-        Matcher m = p.matcher(this.JSON);
-        
-        while(m.find()){
-            if(m.group(1).equals("Token")){
-                this.token=m.group(3);
-                System.out.println(this.token);
-            }
-            
-        }
-//        while(m.find()){
-//            System.out.println(m.group(2));
-//        }
-        return this;
+        return g.fromJson(JSON, Reply_Parser.class);
     
     }// End of method
+    
+    
+    public class B_Service_Object{
+        String ServiceName;
+        String Value;
+    }// End of class B_Parser
     
 }
