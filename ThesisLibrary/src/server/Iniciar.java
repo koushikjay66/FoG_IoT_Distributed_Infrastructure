@@ -81,9 +81,9 @@ public class Iniciar {
                 throw new Exception("Request timed out!");
             }
 
-            //server_db_helper s = new server_db_helper();
-            //s.bootstrap_db_info();
-            mysql m = new mysql(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+            server_db_helper s = new server_db_helper();
+            s.bootstrap_db_info();
+//            mysql m = new mysql(DB_HOST, DB_USER, DB_PASS, DB_NAME);
         } catch (ClassNotFoundException ex) {
             System.out.println("Your boot strap class is not Found! Make sure you entered class with package Name");
             return build_status;
@@ -179,7 +179,7 @@ public class Iniciar {
         private server_db_helper() {
             System.out.println("Entered Info FUnc");
             this.m = new mysql(DB_HOST, DB_USER, DB_PASS, DB_NAME);
-            this.show_tables = "SELECT * FROM COMPLEX_SERVICE";
+            this.show_tables = "SHOW tables";
         }
 
         private void bootstrap_db_info() throws SQLException {

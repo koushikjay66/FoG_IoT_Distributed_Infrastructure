@@ -27,6 +27,7 @@ public class ResponseBuilder {
                 tokenG()
                 +","+basicServicesG()+
                 "}";
+            
         return temp;
     }//End of compile 
     
@@ -38,20 +39,20 @@ public class ResponseBuilder {
      */
     private String tokenG(){
         if(this.token!=null){
-            return "Token: \""+token+"\"";
+            return "\"Token\": \""+token+"\"";
         }
         else 
             return null;
     }// End of finction tokenG
     
     private String basicServicesG(){
-        String service="B.Service: {";
+        String service="\"B_Service\": [";
         for (int i = 0; i <replyObject.length ; i++) {
-            service=service +"{ServiceName: "+((M2MReply)replyObject[i]).serviceName+", ";
-            service+="value: "+((M2MReply)replyObject[i]).serviceValue+"}";
-            System.out.println(service);
+            service+="{\"ServiceName\": \""+((M2MReply)replyObject[i]).serviceName+"\", ";
+            service+="\"Value\": \""+((M2MReply)replyObject[i]).serviceValue+"\"}, ";
         }
-        return service+"}";
+        service =service.substring(0, service.lastIndexOf(",")-1);
+        return service+"]";
         
     }// End of function basicServices
    

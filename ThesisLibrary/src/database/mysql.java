@@ -37,13 +37,14 @@ public class mysql {
     public mysql(String host, String user, String pass, String db_name) {
         try {
             String c = "jdbc:mysql://" + host + "/" + db_name + "?user=" + user + "&password=" + pass;
+            System.out.println(c);
             conn = DriverManager.getConnection(c);
             System.out.println("Connection to Database Was Successfull. Database also Exists");
         } catch (SQLException e) {
             System.out.println(e.getMessage());;
         } finally {
             //  conn.close();
-            
+
         }
     }
 
@@ -101,10 +102,8 @@ public class mysql {
                 int total_col = rsmd.getColumnCount();
                 String temp[] = new String[total_col];
                 for (int i = 0; i < total_col; i++) {
-
-                    temp[i] = rsmd.getColumnName(i + 1);
+                    temp[i] = rsmd.getColumnLabel(i + 1);
                     res.put(temp[i], new ArrayList());
-
                 }
                 while (result.next()) {
                     for (int i = 0; i < total_col; i++) {
@@ -138,9 +137,11 @@ public class mysql {
     }
 
     public void processQuery(String sql) throws SQLException {
-        
-        String QueryType = sql.substring(0, sql.lastIndexOf(" "));
-        if (QueryType.equalsIgnoreCase("SELECT")) {
+
+        String QueryType = sql.substring(0, sql.indexOf(" "));
+        System.out.println(QueryType);
+        if (QueryType.equalsIgnoreCase("SELECT") || QueryType.equalsIgnoreCase("SHOW")) {
+            System.out.println("baal");
             executeSelect(sql);
         } else {
             System.out.println(sql);
