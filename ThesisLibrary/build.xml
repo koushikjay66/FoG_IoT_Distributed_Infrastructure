@@ -78,7 +78,7 @@
         -->
         <property name="store.jar.mysql-connector-java-5.1.40-bin" value="MYSQL Dependency"/>
 
-
+         <property name="store.jar.gson-2.2.2" value="JSON Dependency"/>
         <!-- don't edit below this line -->
 
         <property name="store.dir" value="store"/>
