@@ -39,19 +39,20 @@ public class ResponseBuilder {
      */
     private String tokenG(){
         if(this.token!=null){
-            return "Token: \""+token+"\"";
+            return "\"Token\": \""+token+"\"";
         }
         else 
             return null;
     }// End of finction tokenG
     
     private String basicServicesG(){
-        String service="B.Service: {";
+        String service="\"B_Service\": ]";
         for (int i = 0; i <replyObject.length ; i++) {
-            service+="{ServiceName: "+((GenericReply)replyObject[i]).serviceName+", ";
-            service+="value: "+((GenericReply)replyObject[i]).serviceValue+"}";
+            service+="{\"ServiceName\": \""+((GenericReply)replyObject[i]).serviceName+"\", ";
+            service+="\"Value\": \""+((GenericReply)replyObject[i]).serviceValue+"\"}, ";
         }
-        return service+"}";
+        service =service.substring(0, service.lastIndexOf(",")-1);
+        return service+"]";
         
     }// End of function basicServices
    
