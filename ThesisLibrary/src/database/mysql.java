@@ -31,11 +31,8 @@ public final class mysql {
     private final String DB_URL;
 
     private Connection conn;
-    private  Statement st;
+    private Statement st;
     private ResultSet result;
-
-    private int changed = -1;
-    public HashMap res;
 
     public mysql() {
         this.DB_HOST = Iniciar.DB_HOST;
@@ -68,15 +65,15 @@ public final class mysql {
         conn.close();
     }
 
-    private  void executeSelect(String sql) throws SQLException {
-
+    private Object execute(String sql) throws SQLException {
+        openConnection();
+        HashMap res = new HashMap<>();
         st = conn.createStatement();
         if (st.execute(sql)) {
 
             result = st.getResultSet();
             if (result != null) {
                 ResultSetMetaData rsmd = result.getMetaData();
-                res = new HashMap<>();
                 int total_col = rsmd.getColumnCount();
                 String temp[] = new String[total_col];
                 for (int i = 0; i < total_col; i++) {
@@ -93,35 +90,36 @@ public final class mysql {
             }
 
         }
+        closeConnection();
+        return res;
     }
 
-    private  void executeOthers(String sql) throws SQLException {
-
+    /**
+     *
+     * @param sql
+     * @return
+     * @throws SQLException
+     */
+    private Object execute(String sql, boolean t) throws SQLException {
+        int changed = -1;
+        openConnection();
         st = conn.createStatement();
         if (st.execute(sql)) {
             changed = st.getUpdateCount();
 
         }
-
+        closeConnection();
+        return changed;
     }
 
-    public  void processQuery(String sql) throws SQLException {
-
+    public Object processQuery(String sql) throws SQLException {
+        Object t;
         String QueryType = sql.substring(0, sql.indexOf(" "));
-        System.out.println(QueryType);
         if (QueryType.equalsIgnoreCase("SELECT") || QueryType.equalsIgnoreCase("SHOW")) {
-            System.out.println("baal");
-            executeSelect(sql);
+            t=execute(sql);
         } else {
-            executeOthers(sql);
+            t=execute(sql, true);
         }
+        return t;
     }// End of method
-    
-    public HashMap result(){
-        return res;
-    }// End of function
-    
-    public int changedCount(){
-            return changed;
-    }
 }// End of class new MySql
