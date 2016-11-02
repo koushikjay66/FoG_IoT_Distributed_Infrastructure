@@ -20,7 +20,7 @@ import java.util.logging.Logger;
  *
  * @author Koushik
  */
-public class mysql {
+public class mysql_old {
 
     private Connection conn;
     private Statement st;
@@ -34,7 +34,7 @@ public class mysql {
      * @param sql
      * @param QueryType
      */
-    public mysql(String host, String user, String pass, String db_name) {
+    public mysql_old(String host, String user, String pass, String db_name) {
         try {
             String c = "jdbc:mysql://" + host + "/" + db_name + "?user=" + user + "&password=" + pass;
             conn = DriverManager.getConnection(c);
@@ -47,7 +47,7 @@ public class mysql {
         }
     }
 
-    public mysql(String sql, String QueryType) {
+    public mysql_old(String sql, String QueryType) {
         try {
             conn
                     = DriverManager.getConnection("jdbc:mysql://localhost/services_db?"
@@ -55,11 +55,11 @@ public class mysql {
 
             processQuery(sql, QueryType);
         } catch (SQLException ex) {
-            Logger.getLogger(mysql.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(mysql_old.class.getName()).log(Level.SEVERE, null, ex);
         }
     }// End of this constructor
 
-    public mysql(String sql, String QueryType, String tableName) {
+    public mysql_old(String sql, String QueryType, String tableName) {
         try {
             conn
                     = DriverManager.getConnection("jdbc:mysql://localhost/" + tableName + "?"
@@ -67,18 +67,18 @@ public class mysql {
 
             processQuery(sql, QueryType);
         } catch (SQLException ex) {
-            Logger.getLogger(mysql.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(mysql_old.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    public mysql(String uri, String user, String password, String db_name, String sql, String QueryType) {
+    public mysql_old(String uri, String user, String password, String db_name, String sql, String QueryType) {
 
         String c = "jdbc:mysql://" + uri + "//" + db_name + "?user=" + user + "&password=" + password;
         try {
             conn = DriverManager.getConnection(c);
             processQuery(sql, QueryType);
         } catch (SQLException ex) {
-            Logger.getLogger(mysql.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(mysql_old.class.getName()).log(Level.SEVERE, null, ex);
         }
     }// End of constructor
 

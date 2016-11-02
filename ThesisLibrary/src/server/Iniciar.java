@@ -84,7 +84,7 @@ public class Iniciar {
 
             server_db_helper s = new server_db_helper();
             s.bootstrap_db_info();
-//            mysql m = new mysql(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+//            mysql_old m = new mysql_old(DB_HOST, DB_USER, DB_PASS, DB_NAME);
         } catch (ClassNotFoundException ex) {
             System.out.println("Your boot strap class is not Found! Make sure you entered class with package Name");
             return build_status;

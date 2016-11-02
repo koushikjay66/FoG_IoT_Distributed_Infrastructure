@@ -5,15 +5,15 @@
  */
 package server.sync.database;
 
-import database.mysql;
+import database.mysql_old;
 
 /**
  *
  * @author Koushik
  */
 public final class Update_DB {
-    private mysql db;
+    private mysql_old db;
     private Update_DB(){
-        //this.db=new mysql(sql, QueryType);
+        //this.db=new mysql_old(sql, QueryType);
     }
 }// End of class Update_DB

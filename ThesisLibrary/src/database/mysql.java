@@ -19,7 +19,7 @@ import server.Iniciar;
  *
  * @author Koushik
  */
-public final class mysqlnew {
+public final class mysql {
 
     /**
      * Final variables will be
@@ -37,7 +37,7 @@ public final class mysqlnew {
     private int changed = -1;
     public HashMap res;
 
-    public mysqlnew() {
+    public mysql() {
         this.DB_HOST = Iniciar.DB_HOST;
         this.DB_USER = Iniciar.DB_USER;
         this.DB_PASS = Iniciar.DB_PASS;
@@ -45,7 +45,7 @@ public final class mysqlnew {
         this.DB_URL = url_builder();
     }// End of no argument Constructor
 
-    public mysqlnew(String host, String user, String pass, String db_name) {
+    public mysql(String host, String user, String pass, String db_name) {
         this.DB_HOST = host;
         this.DB_USER = user;
         this.DB_PASS = pass;
@@ -122,6 +122,6 @@ public final class mysqlnew {
     }// End of function
     
     public int changedCount(){
-        return changed;
+            return changed;
     }
 }// End of class new MySql
