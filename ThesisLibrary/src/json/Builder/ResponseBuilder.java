@@ -8,6 +8,7 @@ package json.Builder;
 /**
  *
  * @author Koushik
+ * @param <T> Response Builder of specific type 
  */
 public class ResponseBuilder<T>{
 
@@ -24,4 +25,4 @@ public class ResponseBuilder<T>{
         return Builder.compile(p);
     }//End of compile 
 
-}
+}// End of class Builder

@@ -26,6 +26,7 @@ public class Iniciar {
     
     public static String BOOTSTRAP_CLASS_NAME;
     public static Class parsing;
+    public static String parsing_class_object;
     /**
      * The IP Address with port of the parent Server
      */

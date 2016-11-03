@@ -20,12 +20,13 @@ import json.Builder.GenericReply;
  * @author arsha
  */
 public class ReplyAgent {
+
     private final mysql result = new mysql();
     private Map<String, String> valuemap = new HashMap();
     public Object[] serviceResult;
     private String serviceName;
 
-    public ReplyAgent(Service s) throws Exception{
+    public ReplyAgent(Service s) throws Exception {
         this.serviceName = s.name;
 
         updateAgent ua = new updateAgent();
@@ -61,11 +62,11 @@ public class ReplyAgent {
                 + "WHERE cs_name=\"" + serviceName + "\" AND complex_service.csid=service_relation.csid AND "
                 + "service_relation.ssid=simple_service.ssid";
 
-         HashMap res=(HashMap)result.processQuery(sql);
+        HashMap res = (HashMap) result.processQuery(sql);
         if (res.get("ss_name").toString().equals("[]")) {
             String str = getsimpleService(serviceName);
             System.out.println(str);
-            if (str!=null) {
+            if (str != null) {
                 valuemap.put(serviceName, str);
             }
         } else {
@@ -80,13 +81,12 @@ public class ReplyAgent {
 
         }
     }
-   
-    
+
     //This returns the basic service value as a string "serviceName,Value"
     private String getsimpleService(String serviceName) throws SQLException {
 
         String sql = "SELECT ss_value FROM simple_service WHERE ss_name =\"" + serviceName + "\"";
-        HashMap res=(HashMap)result.processQuery(sql);
+        HashMap res = (HashMap) result.processQuery(sql);
         String value = null;
         if (!res.get("ss_value").toString().equals("[]")) {
             for (Object i : res.keySet()) {
@@ -98,10 +98,11 @@ public class ReplyAgent {
         return value;
     }// End of method getSimpleService
 
-    public int resultLength(){
+    public int resultLength() {
         return serviceResult.length;
     }
-    public Object[] result(){
+
+    public Object[] result() {
         return serviceResult;
     }
 }

@@ -52,26 +52,27 @@ public class Requestedinfo {
         return true;
     }// End of method analizeResult
 
-    public String generateResult() {
+    public String generateResult() throws ClassNotFoundException {
         if (!possibleOrNot) {
             return "Invalid Request";
         }
         Service service = null;
         if (rpo.optionalParam.length == 0) {
-            service = new Service(rpo.serviceName);
+            service = new Service<>(rpo.serviceName);
         } else {
             service = new Service(rpo.serviceName, rpo.optionalParam);
         }
         // Service compile if returns nulll then it is time to call the agent
-        Object[] ar = service.compile();
+        Object ar = service.compile();
 
         if (ar == null) {
             Leech l = new Leech(rpo);
 
             return l.startLeeching(requestedString);
         } else {
-            ResponseBuilder rb = new ResponseBuilder(, rpo.token);
+            
+            ResponseBuilder rb = new ResponseBuilder(ar, rpo.token);
             return rb.compile();
         }
     }// End of method generateResult
-}
+}// End of class 

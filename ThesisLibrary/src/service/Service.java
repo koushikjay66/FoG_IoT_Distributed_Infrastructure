@@ -15,7 +15,7 @@ import server.Iniciar;
  *
  * @author Koushik
  */
-public class Service {
+public class Service<T> {
 
     private Method m;
     public String name;
@@ -34,7 +34,7 @@ public class Service {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public Object[] compile(){
+    public T compile() {
         try {
             Class<?> c = Class.forName(Iniciar.BOOTSTRAP_CLASS_NAME);
             Constructor<?> cons = c.getConstructor(Service.class);
@@ -46,7 +46,7 @@ public class Service {
                 return null;
             } else {
                 m = o.getClass().getDeclaredMethod("result");
-                return (Object[]) m.invoke(o);
+                return m.invoke(o);
             }
         } catch (Exception e) {
             Logger.getLogger(Service.class.getName()).log(Level.SEVERE, null, e);
