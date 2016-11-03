@@ -34,7 +34,11 @@ public class Service<T> {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public T compile() {
+    /**
+     *
+     * @param <T>
+     */
+    public <T>T compile() {
         try {
             Class<?> c = Class.forName(Iniciar.BOOTSTRAP_CLASS_NAME);
             Constructor<?> cons = c.getConstructor(Service.class);
@@ -46,7 +50,7 @@ public class Service<T> {
                 return null;
             } else {
                 m = o.getClass().getDeclaredMethod("result");
-                return m.invoke(o);
+                return (T) m.invoke(o);
             }
         } catch (Exception e) {
             Logger.getLogger(Service.class.getName()).log(Level.SEVERE, null, e);

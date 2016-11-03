@@ -34,8 +34,14 @@ public class Threads extends Thread{
      public void run(){
          String dataInput=readInput();
          Requestedinfo  redi = new Requestedinfo(s, clientIp, dataInput);
-         String result=redi.generateResult();
-         writeOutput(result);
+         String result;
+        try {
+            result = redi.generateResult();
+            writeOutput(result);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Threads.class.getName()).log(Level.SEVERE, null, ex);
+        }
+         
          
      }// End of method run
      
