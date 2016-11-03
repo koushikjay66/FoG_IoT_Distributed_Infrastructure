@@ -6,19 +6,21 @@
 package json.Builder;
 
 import com.google.gson.Gson;
-import json.parser.Parser;
 
 /**
- *  This class is a common Builder for all kinds of JSON Objects independent to all forms of servers.
- * One and only static method Compile .
- * Though this is an abstract class the compile method has got implementation details and this class, you don't need to be instantiated
+ * This class is a common Builder for all kinds of JSON Objects independent to
+ * all forms of servers. One and only static method Compile . Though this is an
+ * abstract class the compile method has got implementation details and this
+ * class, you don't need to be instantiated
+ *
  * @author Koushik
+ * @param <T> The type of variable to parse from 
  */
-public abstract class Builder {
+public  abstract class Builder<T> {
 
-    public static String compile(Parser p ){
+    public static <T>String compile(T p) {
         Gson g = new Gson();
         return g.toJson(p);
     }
-    
+
 }// End of class Builder

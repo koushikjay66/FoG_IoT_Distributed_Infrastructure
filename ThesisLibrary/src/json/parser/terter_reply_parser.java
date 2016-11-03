@@ -6,7 +6,10 @@
 package json.parser;
 
 import com.google.gson.Gson;
+import java.security.NoSuchAlgorithmException;
 import json.Builder.Builder;
+import json.Builder.objects.M2M_Request;
+import json.Builder.objects.M2M_Response;
 import json.Builder.objects.Main_server;
 
 /**
@@ -15,23 +18,8 @@ import json.Builder.objects.Main_server;
  */
 public class terter_reply_parser {
 
-    public static void main(String args[]) {
-        String JSON="{\n" +
-"    \"Token\" : \"Here will go the token \", \n" +
-"    \"C_Service\" :[\n" +
-"                    {\"csid\" : \"csid\", \"cs_name\" : \"CS NAME HERE\" , \"cs_provider\" : \"provider name here\"\n" +
-"                    }       \n" +
-"                ],\n" +
-"    \"B_Service\" : [\n" +
-"                    {\n" +
-"                        \"Ss_id\": \"13101206\", \"Ss_name\" : \"koushik\", \"ss_value\": \"bulala\", \"ss_protocal\": \"http\", \"ss_url\": \"http://google.com\", \"ss_ttl\": \"1306\", \"ss_timestamp\": \"timestamp here\"\n" +
-"                    },\n" +
-"                    {\n" +
-"                        \"Ss_id\": \"13101209\", \"Ss_name\" : \"koushik\", \"ss_value\": \"bulala\", \"ss_protocal\": \"http\", \"ss_url\": \"http://google.com\", \"ss_ttl\": \"1306\", \"ss_timestamp\": \"timestamp here\"\n" +
-"                    }\n" +
-"                  ]\n" +
-"\n" +
-"}";
+    public static void main(String args[]) throws NoSuchAlgorithmException {
+        String JSON="\"REQ\" : {\"authentication\" : {\"USERID\": \"koushikjay66\", \"password\": \"Nopassword01\"}, \"token\": \"2b2c5f9e6655ce42740584f4c25c85b6\", \"service\": {\"name\": \"env\", \"components\": \"koushik,arshad,heya,erfan\"}}";
 //        Reply_Parser rp = new Reply_Parser(JSON);
 //        Object  t= rp.getIt();
 //        System.out.println(rp.B_Service[0].ServiceName);
@@ -39,11 +27,21 @@ public class terter_reply_parser {
 //        
 //        System.out.println(rp.B_Service.length);
 
-    
-        Gson g = new Gson();
-        Main_server m =g.fromJson(JSON, json.Builder.objects.Main_server.class);
-        
-        System.out.println(Builder.compile(m));
-    
+//    
+//        Gson g = new Gson();
+//        json.Builder.objects.M2M_Response m =g.fromJson(JSON, json.Builder.objects.M2M_Response.class);
+//        
+//        System.out.println(m.B_Service[0].Ss_name);
+
+//            M2M_Request mm = new M2M_Request("REQ").build("koushikjay66", "Nopassword01", "env", "koushik, heya, arshad");
+//            Gson g = new Gson();
+//            String newJ=g.toJson(mm);
+//            
+//            M2M_Response m = new M2M_Response();
+//            
+//            g = new Gson();
+//           M2M_Response r = g.fromJson(newJ, M2M_Response.class);
+//            System.out.println(r.B_Service[]);
+            
     }
 }

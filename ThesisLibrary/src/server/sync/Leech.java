@@ -23,7 +23,7 @@ public final class Leech {
 
     private final String token;
     private final String serviceName;
-
+    
     public Leech(ReqestedParsedObject rpo) {
         this.token = rpo.token;
         this.serviceName = rpo.serviceName;

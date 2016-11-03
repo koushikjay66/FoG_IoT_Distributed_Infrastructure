@@ -7,9 +7,9 @@ package json.Builder.objects;
 
 /**
  *
- * @author Koushik Jay
+ * @author Koushik
  */
-public class Main_server {
+public class SOA_server {
 
     public String Token;
     public Complex_Service[] C_Service;
@@ -20,7 +20,7 @@ public class Main_server {
         public String csid;
         public String cs_name;
         public String cs_provider;
-        
+
     }// End of class COmplex_Service
 
     public class Simple_Service {

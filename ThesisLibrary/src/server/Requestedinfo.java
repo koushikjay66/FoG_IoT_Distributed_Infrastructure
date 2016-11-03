@@ -56,7 +56,6 @@ public class Requestedinfo {
         if (!possibleOrNot) {
             return "Invalid Request";
         }
-
         Service service = null;
         if (rpo.optionalParam.length == 0) {
             service = new Service(rpo.serviceName);
@@ -71,7 +70,7 @@ public class Requestedinfo {
 
             return l.startLeeching(requestedString);
         } else {
-            ResponseBuilder rb = new ResponseBuilder(ar, rpo.token);
+            ResponseBuilder rb = new ResponseBuilder(, rpo.token);
             return rb.compile();
         }
     }// End of method generateResult
