@@ -15,7 +15,7 @@ public class SOA_server {
     public Complex_Service[] C_Service;
     public Simple_Service[] B_Service;
 
-    public class Complex_Service {
+    public  class Complex_Service {
 
         public String csid;
         public String cs_name;
@@ -23,15 +23,22 @@ public class SOA_server {
 
     }// End of class COmplex_Service
 
-    public class Simple_Service {
+    public  class Simple_Service {
 
-        public String Ss_id;
-        public String Ss_name;
+        public String ss_id;
+        public String ss_name;
         public String ss_value;
         public String ss_protocal;
         public String ss_url;
         public String ss_ttl;
         public String ss_timestamp;
 
+    }
+    
+    public void setC_Service(int x){
+        C_Service = new Complex_Service[x];
+    }
+    public void setB_Service(int x){
+        B_Service = new Simple_Service[x];
     }
 }
