@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package json.Builder;
+package json.parser;
 
 /**
  *
- * @author Arshad Hossain
+ * @author Koushik
  */
-public class main {
+public abstract class Parser {
     
 }

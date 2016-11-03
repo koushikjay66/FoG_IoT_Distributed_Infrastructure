@@ -3,13 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package json.parser;
+package json.Builder.objects;
+
+import json.parser.Parser;
 
 /**
  *
- * @author Arshad Hossain
+ * @author Koushik Jay
  */
-public class main {
+public class Main_server extends Parser{
 
     public String Token;
     public Complex_Service[] C_Service;
@@ -17,8 +19,10 @@ public class main {
 
     public class Complex_Service {
 
-        public String ServiceName;
-        public String Provider;
+        public String csid;
+        public String cs_name;
+        public String cs_provider;
+        
     }// End of class COmplex_Service
 
     public class Simple_Service {

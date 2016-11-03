@@ -6,7 +6,8 @@
 package json.parser;
 
 import com.google.gson.Gson;
-import server.Iniciar;
+import json.Builder.Builder;
+import json.Builder.objects.Main_server;
 
 /**
  *
@@ -31,20 +32,18 @@ public class terter_reply_parser {
 "                  ]\n" +
 "\n" +
 "}";
-        Reply_Parser rp = new Reply_Parser(JSON);
-        Object  t= rp.getIt();
-        System.out.println(rp.B_Service[0].ServiceName);
-        System.out.println(rp.B_Service[0].Value);
-        
-        System.out.println(rp.B_Service.length);
-
-//    
-//        Gson g = new Gson();
-//        main m =g.fromJson(JSON, main.class);
+//        Reply_Parser rp = new Reply_Parser(JSON);
+//        Object  t= rp.getIt();
+//        System.out.println(rp.B_Service[0].ServiceName);
+//        System.out.println(rp.B_Service[0].Value);
 //        
-//        for (int i = 0; i < m.B_Service.length; i++) {
-//            System.out.println(m.B_Service[i].Ss_id);
-//        }
+//        System.out.println(rp.B_Service.length);
+
+    
+        Gson g = new Gson();
+        Main_server m =g.fromJson(JSON, json.Builder.objects.Main_server.class);
+        
+        System.out.println(Builder.compile(m));
     
     }
 }
