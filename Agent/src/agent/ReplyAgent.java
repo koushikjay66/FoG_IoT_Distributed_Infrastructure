@@ -18,6 +18,7 @@ import service.Service;
 import json.Builder.GenericReply;
 import json.Builder.objects.SOA_server;
 import json.Builder.objects.SOA_server.Complex_Service;
+import json.Builder.objects.SOA_server.Simple_Service;
 import responseResult.RespResult;
 
 /**
@@ -64,6 +65,7 @@ public class ReplyAgent {
      * @param serviceName - the required service name
      */
     // this searches for the complex service
+    int ss_count;
     private void getComplexServiceValues(String serviceName) throws SQLException, ClassNotFoundException, NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
 //        String sql = "SELECT ss_name FROM complex_service, simple_service, service_relation "
 //                + "WHERE cs_name=\"" + serviceName + "\" AND complex_service.csid=service_relation.csid AND "
@@ -92,40 +94,75 @@ public class ReplyAgent {
         HashMap res = (HashMap) result.processQuery(sql);
         int arcount = 0;
         if (res.get("cs_name").toString().equals("[]")) {
-
+            
         } else {
             RespResult rr = new RespResult();
             Complex_Service scs = (new SOA_server()).new Complex_Service();
-            
+
             ArrayList<String> arrL = rr.replyFormat("json.Builder.objects.SOA_server$Complex_Service");
 
             for (Object i : res.keySet()) {
                 if (arrL.contains(i)) {
                     String temp = res.get(i).toString().substring(1, res.get(i).toString().length() - 1);
-                    scs.getClass().getDeclaredField(i.toString()).set(scs,temp);
+                    scs.getClass().getDeclaredField(i.toString()).set(scs, temp);
                     System.out.println(scs.getClass().getDeclaredField(i.toString()).get(scs));
-                   
+                    
                 }
             }
             sr.setC_Service(1);
-            sr.C_Service[0]=scs;
+            sr.C_Service[0] = scs;
+            
+            res.clear();
+            String sql2 = "SELECT ss_name FROM complex_service, simple_service, service_relation "
+                + "WHERE cs_name=\"" + serviceName + "\" AND complex_service.csid=service_relation.csid AND "
+                + "service_relation.ssid=simple_service.ssid";
+            res = (HashMap) result.processQuery(sql);
+            for (Object i : res.keySet()) {
+                String basics = res.get(i).toString().substring(1, res.get(i).toString().length() - 1);
+                String[] basicServices = basics.split(", ");// divide every 
+                ss_count= basicServices.length;
+                sr.setB_Service(ss_count);
+                for (int j = 0; j < basicServices.length; j++) {
+                    getsimpleService(basicServices[j],j);
+                }
+            }// End of for loop 
         }
     }
 
     //This returns the basic service value as a string "serviceName,Value"
-    private void getsimpleService(String serviceName) throws SQLException {
+    private void getsimpleService(String serviceName,int position) throws SQLException, ClassNotFoundException, NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
 
-        String sql = "SELECT ss_value FROM simple_service WHERE ss_name =\"" + serviceName + "\"";
-        HashMap res = (HashMap) result.processQuery(sql);
-        String value = null;
-//        if (!res.get("ss_value").toString().equals("[]")) {
-//            for (Object i : res.keySet()) {
-//                if (i.equals("ss_value")) {
-//                    value = res.get(i).toString().substring(1, res.get(i).toString().length() - 1);
-//                }
-//            }
-//        }
-//        return value;
+        String sql = "SELECT * FROM simple_service WHERE ss_name =\"" + serviceName + "\"";
+//        HashMap res = (HashMap) result.processQuery(sql);
+//        String value = null;
+////        if (!res.get("ss_value").toString().equals("[]")) {
+////            for (Object i : res.keySet()) {
+////                if (i.equals("ss_value")) {
+////                    value = res.get(i).toString().substring(1, res.get(i).toString().length() - 1);
+////                }
+////            }
+////        }
+////        return value;
+    HashMap res = (HashMap) result.processQuery(sql);
+        int arcount = 0;
+        if (res.get("ss_name").toString().equals("[]")) {
+            
+        } else {
+            RespResult rr = new RespResult();
+            Simple_Service sss = (new SOA_server()).new Simple_Service();
+
+            ArrayList<String> arrL = rr.replyFormat("json.Builder.objects.SOA_server$Simple_Service");
+
+            for (Object i : res.keySet()) {
+                if (arrL.contains(i)) {
+                    String temp = res.get(i).toString().substring(1, res.get(i).toString().length() - 1);
+                    sss.getClass().getDeclaredField(i.toString()).set(sss, temp);
+                    System.out.println(sss.getClass().getDeclaredField(i.toString()).get(sss));
+                }
+            }
+//            sr.setB_Service(1);
+            sr.B_Service[position] = sss;
+        }
     }// End of method getSimpleService
 
     public int resultLength() {
@@ -137,4 +174,3 @@ public class ReplyAgent {
     }
 
 }
-
