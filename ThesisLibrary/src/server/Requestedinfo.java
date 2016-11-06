@@ -6,11 +6,14 @@
 package server;
 
 import com.google.gson.Gson;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.net.Socket;
-import json.Builder.ResponseBuilder;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import json.Builder.Builder;
 import json.Builder.objects.M2M_Request;
-import server.sync.Leech;
-import service.Service;
 
 /**
  * 0
@@ -56,20 +59,15 @@ public class Requestedinfo {
         if (!possibleOrNot) {
             return "Invalid Request";
         }
-        Service service = new Service(req);
+        try {
+            Class<?> c = Class.forName(Iniciar.BOOTSTRAP_CLASS_NAME);
+            Constructor<?> cons = c.getConstructor(M2M_Request.class);
+            Object o = cons.newInstance(req);
+            Method m = o.getClass().getDeclaredMethod("compile");
+            return Builder.compile(m.invoke(o));
 
-        // Service compile if returns nulll then it is time to call the agent
-        Object ar = service.compile();
-        // If the Object is totally Null then I will request it 
-        // To my parent or my siblings. 
-        if (ar == null) {
-            Leech l = new Leech(req);
-            return l.startLeeching(requestedString);
-        } // If optional parameters is present and I have not got the full things I will also request 
-        // the optional things on the server. 
-        else {
-            ResponseBuilder rb = new ResponseBuilder(ar);
-            return rb.compile();
-        }// End of else
+        } catch (ClassNotFoundException | NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+            return "Can't Process your Request At This Time";
+        }
     }// End of method generateResult
 }// End of class 
