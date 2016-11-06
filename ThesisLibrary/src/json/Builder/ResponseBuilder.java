@@ -12,8 +12,8 @@ package json.Builder;
  */
 public class ResponseBuilder<T>{
 
-    private String token;
-    private T p;
+    private final String token;
+    private final T p;
 
     public ResponseBuilder(T p, String token) {
         this.p = p;

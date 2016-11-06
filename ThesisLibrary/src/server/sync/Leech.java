@@ -5,6 +5,7 @@
  */
 package server.sync;
 
+import json.Builder.objects.M2M_Request;
 import json.ReqestedParsedObject;
 import server.Requestedinfo;
 import server.Requestinfo;
@@ -21,11 +22,11 @@ import server.Requestinfo;
  */
 public final class Leech {
 
-    private final String token;
+    private final String TOKEN;
     private final String serviceName;
     
-    public Leech(ReqestedParsedObject rpo) {
-        this.token = rpo.token;
+    public Leech(M2M_Request rpo) {
+        this.token = rpo.TOKEN;
         this.serviceName = rpo.serviceName;
     }// End of Constructor 
 

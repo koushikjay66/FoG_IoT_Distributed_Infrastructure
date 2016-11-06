@@ -13,12 +13,11 @@ import com.google.gson.Gson;
  * abstract class the compile method has got implementation details and this
  * class, you don't need to be instantiated
  *
- * @author Koushik
- * @param <T> The type of variable to parse from 
+ * @author Koushik 
  */
-public  abstract class Builder<T> {
+public  abstract class Builder {
 
-    public static <T>String compile(T p) {
+    public static <T> String compile(T p) {
         Gson g = new Gson();
         return g.toJson(p);
     }

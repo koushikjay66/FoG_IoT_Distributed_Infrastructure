@@ -5,8 +5,10 @@
  */
 package server;
 
+import com.google.gson.Gson;
 import java.net.Socket;
 import json.Builder.ResponseBuilder;
+import json.Builder.objects.M2M_Request;
 import json.ReqestedParsedObject;
 import json.Requestparser;
 import server.sync.Leech;
@@ -23,8 +25,7 @@ public class Requestedinfo {
     public Socket s;
     public String requestedString;
     public boolean possibleOrNot;
-    public ReqestedParsedObject rpo;
-
+    private M2M_Request req;
     public Requestedinfo(Socket s, String ip, String requested) {
         this.ip = ip;
         this.s = s;
@@ -47,8 +48,8 @@ public class Requestedinfo {
      * @return true/ false depending on the things .
      */
     public boolean analizeRequested() {
-        Requestparser p = new Requestparser(requestedString);
-        rpo = p.getIt();
+        Gson g = new Gson();
+         req = g.fromJson(requestedString, M2M_Request.class);
         return true;
     }// End of method analizeResult
 
@@ -56,21 +57,17 @@ public class Requestedinfo {
         if (!possibleOrNot) {
             return "Invalid Request";
         }
-        Service service = null;
-        if (rpo.optionalParam.length == 0) {
-            service = new Service<>(rpo.serviceName);
-        } else {
-            service = new Service(rpo.serviceName, rpo.optionalParam);
-        }
+        Service service = new Service(req);
+
         // Service compile if returns nulll then it is time to call the agent
         Object ar = service.compile();
 
         if (ar == null) {
-            Leech l = new Leech(rpo);
+            Leech l = new Leech(req);
 
             return l.startLeeching(requestedString);
         } else {
-            
+
             ResponseBuilder rb = new ResponseBuilder(ar, rpo.token);
             return rb.compile();
         }

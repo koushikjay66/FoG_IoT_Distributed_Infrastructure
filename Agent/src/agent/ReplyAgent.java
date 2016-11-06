@@ -169,8 +169,13 @@ public class ReplyAgent {
         return serviceResult.length;
     }
 
-    public Object[] result() {
-        return serviceResult;
+    public <T> T result() {
+        if(result not found){
+        return null;
+    }else{
+            return Object Reference;
+            }
+        
     }
 
 }

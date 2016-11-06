@@ -15,23 +15,12 @@ import server.Iniciar;
  *
  * @author Koushik
  */
-public class Service<T> {
+public class Service<T>{
 
     private Method m;
-    public String name;
-    public String[] opValues;
-
-    public Service(String name) {
-        this.name = name;
-    }
-
-    public Service(String name, String[] optionalValues) {
-        this.name = name;
-        this.opValues = optionalValues;
-    }
-
-    public Service() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public T RequestedObject;
+    public Service(T RequestedObject) {
+        this.RequestedObject=RequestedObject;
     }
 
     /**
@@ -43,14 +32,13 @@ public class Service<T> {
             Class<?> c = Class.forName(Iniciar.BOOTSTRAP_CLASS_NAME);
             Constructor<?> cons = c.getConstructor(Service.class);
             Object o = cons.newInstance(this);
-            Method m = o.getClass().getDeclaredMethod("resultLength");
+            Method m = o.getClass().getDeclaredMethod("result");
 
-            if ((int) m.invoke(o) == 0) {
-                // It is time to call the agent for service things
+            if ( m.invoke(o)==null) {
                 return null;
             } else {
-                m = o.getClass().getDeclaredMethod("result");
-                return (T) m.invoke(o);
+               
+                return  (T) m.invoke(o);
             }
         } catch (Exception e) {
             Logger.getLogger(Service.class.getName()).log(Level.SEVERE, null, e);

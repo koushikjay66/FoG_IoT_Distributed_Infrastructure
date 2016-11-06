@@ -5,16 +5,16 @@
  */
 package json.Builder.objects;
 
-import json.parser.Parser;
+import java.util.ArrayList;
 
 /**
  *
  * @author Koushik
  */
-public class M2M_Response extends Parser {
+public class M2M_Response  {
 
     public String Token;
-    public Simple_Service[] B_Service;
+    public ArrayList<Simple_Service> B_Service = new ArrayList<Simple_Service>();
 
     public class Simple_Service {
 
