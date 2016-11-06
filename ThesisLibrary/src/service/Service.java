@@ -14,6 +14,7 @@ import server.Iniciar;
 /**
  *
  * @author Koushik
+ * @param <T>
  */
 public class Service<T>{
 
@@ -26,20 +27,16 @@ public class Service<T>{
     /**
      *
      * @param <T>
+     * @return 
      */
-    public <T>T compile() {
+    public <T> T compile() {
         try {
             Class<?> c = Class.forName(Iniciar.BOOTSTRAP_CLASS_NAME);
             Constructor<?> cons = c.getConstructor(Service.class);
             Object o = cons.newInstance(this);
             Method m = o.getClass().getDeclaredMethod("result");
-
-            if ( m.invoke(o)==null) {
-                return null;
-            } else {
-               
-                return  (T) m.invoke(o);
-            }
+            return (T) m.invoke(o);
+           
         } catch (Exception e) {
             Logger.getLogger(Service.class.getName()).log(Level.SEVERE, null, e);
             return null;

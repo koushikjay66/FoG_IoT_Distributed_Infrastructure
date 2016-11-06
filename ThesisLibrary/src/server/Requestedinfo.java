@@ -9,8 +9,6 @@ import com.google.gson.Gson;
 import java.net.Socket;
 import json.Builder.ResponseBuilder;
 import json.Builder.objects.M2M_Request;
-import json.ReqestedParsedObject;
-import json.Requestparser;
 import server.sync.Leech;
 import service.Service;
 
@@ -26,6 +24,7 @@ public class Requestedinfo {
     public String requestedString;
     public boolean possibleOrNot;
     private M2M_Request req;
+
     public Requestedinfo(Socket s, String ip, String requested) {
         this.ip = ip;
         this.s = s;
@@ -49,7 +48,7 @@ public class Requestedinfo {
      */
     public boolean analizeRequested() {
         Gson g = new Gson();
-         req = g.fromJson(requestedString, M2M_Request.class);
+        req = g.fromJson(requestedString, M2M_Request.class);
         return true;
     }// End of method analizeResult
 
@@ -61,15 +60,16 @@ public class Requestedinfo {
 
         // Service compile if returns nulll then it is time to call the agent
         Object ar = service.compile();
-
+        // If the Object is totally Null then I will request it 
+        // To my parent or my siblings. 
         if (ar == null) {
             Leech l = new Leech(req);
-
             return l.startLeeching(requestedString);
-        } else {
-
-            ResponseBuilder rb = new ResponseBuilder(ar, rpo.token);
+        } // If optional parameters is present and I have not got the full things I will also request 
+        // the optional things on the server. 
+        else {
+            ResponseBuilder rb = new ResponseBuilder(ar);
             return rb.compile();
-        }
+        }// End of else
     }// End of method generateResult
 }// End of class 

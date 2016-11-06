@@ -7,6 +7,8 @@ package json.Builder.objects;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  *
@@ -19,7 +21,7 @@ public class M2M_Request {
     public String PASSWORD;
     public String TOKEN;
     public String SERVICE_NAME;
-    public String[] COMPONENTS;
+    public ArrayList<String> COMPONENTS;
 
     public M2M_Request(String type) {
         this.TYPE = type;
@@ -64,7 +66,7 @@ public class M2M_Request {
 
     private M2M_Request service(String serviceName, String commaSeperatedValues) {
         service(serviceName);
-        this.COMPONENTS = commaSeperatedValues.split(",");
+        this.COMPONENTS = new ArrayList<>(Arrays.asList(commaSeperatedValues.split(",")));
         return this;
     }// End of service with two parameters
 

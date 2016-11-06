@@ -12,12 +12,11 @@ package json.Builder;
  */
 public class ResponseBuilder<T>{
 
-    private final String token;
+
     private final T p;
 
-    public ResponseBuilder(T p, String token) {
+    public ResponseBuilder(T p) {
         this.p = p;
-        this.token = token;
 
     }// End of ResponserBuilder
 

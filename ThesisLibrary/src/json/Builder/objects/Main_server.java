@@ -5,6 +5,8 @@
  */
 package json.Builder.objects;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Koushik Jay
@@ -12,8 +14,8 @@ package json.Builder.objects;
 public class Main_server {
 
     public String Token;
-    public Complex_Service[] C_Service;
-    public Simple_Service[] B_Service;
+    public Complex_Service C_Service;
+    public ArrayList<Simple_Service> B_Service= new ArrayList<>() ;
 
     public class Complex_Service {
 
@@ -21,7 +23,7 @@ public class Main_server {
         public String cs_name;
         public String cs_provider;
         
-    }// End of class COmplex_Service
+    }// End of class Complex_Service
 
     public class Simple_Service {
 

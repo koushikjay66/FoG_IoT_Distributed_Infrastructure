@@ -6,8 +6,6 @@
 package server.sync;
 
 import json.Builder.objects.M2M_Request;
-import json.ReqestedParsedObject;
-import server.Requestedinfo;
 import server.Requestinfo;
 
 /**
@@ -24,19 +22,21 @@ public final class Leech {
 
     private final String TOKEN;
     private final String serviceName;
-    
+
     public Leech(M2M_Request rpo) {
-        this.token = rpo.TOKEN;
-        this.serviceName = rpo.serviceName;
-    }// End of Constructor 
+        this.TOKEN = rpo.TOKEN;
+        this.serviceName = rpo.SERVICE_NAME;
+    }// End of Constructor
 
     public String startLeeching(String requestedString) {
         Requestinfo rf = new Requestinfo();
         rf.sendData(requestedString);
         String data = rf.getReply();
-        
-        
         return data;
     }// End of method startLeeching
+
+    private void buildRequest() {
+        
+    }// End of method buildRequest
 
 }// End of class Leech
