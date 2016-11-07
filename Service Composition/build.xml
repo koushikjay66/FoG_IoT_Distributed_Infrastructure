@@ -77,8 +77,9 @@
              minus the .jar extension. It should not have spaces.
              <property name="store.jar.name" value="MyJarName"/>
         -->
-        <property name="mysql-connector-java-5.1.40-bin" value="MYSQL Dependency"/>
-
+        <property name="store.jar.mysql-connector-java-5.1.40-bin" value="MYSQL Dependency"/>
+        <property name="store.jar.gson-2.2.2" value="MYSQL Dependency"/>
+        <property name="store.jar.Interface" value="MYSQL Dependency"/>
 
         <!-- don't edit below this line -->
 
