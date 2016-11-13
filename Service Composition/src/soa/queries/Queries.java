@@ -5,6 +5,8 @@
  */
 package soa.queries;
 
+import json.Builder.objects.SOA_server;
+
 /**
  *
  * @author Koushik
@@ -18,6 +20,28 @@ public abstract class Queries {
         return "SELECT ss_name, ss_value FROM simple_service WHERE ssid IN(SELECT ssid FROM service_relation WHERE csid =\""+cs_id+"\") ";
     }// End
     public static String select_from_simple(String ss_name){
-        return "SELECT csid FROM `simple_service` where ss_name=\""+ss_name+"\" LIMIT 1";
+        return "SELECT ssid FROM `simple_service` where ss_name=\""+ss_name+"\" LIMIT 1";
     }// End 
+    
+    public static String insert_complex_service(SOA_server.Complex_Service soa){
+        String sql = "INSERT INTO complex_service VALUES("
+                +"\""+soa.csid+"\", "
+                +"\""+soa.cs_name+"\", "
+                +"\""+soa.cs_provider+"\""
+                + ")";
+        return sql;
+        
+    }
+    
+    public static String insert_simple_service(SOA_server.Simple_Service simple){
+       return  "INSERT INTO simple_service VALUES ("
+               +"\""+simple.ss_id+"\", "
+               +"\""+simple.ss_name+"\", "
+               +"\""+simple.ss_value+"\", "
+               +"\""+simple.ss_protocal+"\", "
+               +"\""+simple.ss_url+"\", "
+               +"\""+simple.ss_ttl+"\", "
+               +"\""+simple.ss_timestamp+"\", "
+               +")";
+    }// End of function 
 }// End of Class queries

@@ -8,6 +8,7 @@ package leech;
 import com.google.gson.Gson;
 import database.mysql;
 import java.security.NoSuchAlgorithmException;
+import java.sql.SQLException;
 import json.Builder.Builder;
 import json.Builder.objects.M2M_Request;
 import json.Builder.objects.M2M_Response;
@@ -15,6 +16,7 @@ import json.Builder.objects.SOA_server;
 import json.parser.Reply_Parser;
 import server.Iniciar;
 import server.Requestinfo;
+import soa.queries.Queries;
 
 /**
  *
@@ -90,9 +92,14 @@ public class Leech {
         return soa;
     }// End of parseAndUpdateDB
     
-    private boolean updateDB(SOA_server soa){
+    private void updateDB(SOA_server soa) throws SQLException{
         mysql m = new mysql();
+        m.processQuery(Queries.insert_complex_service(soa.C_Service));
         
+        for (int i = 0; i < soa.B_Service.size(); i++) {
+            m.processQuery(Queries.insert_simple_service(soa.B_Service.get(i)));
+            
+        }
         
     }// End of updateDB
 }// End of class Leech
