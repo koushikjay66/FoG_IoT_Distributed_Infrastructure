@@ -10,6 +10,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import json.Builder.objects.M2M_Request;
 import json.Builder.objects.M2M_Response;
+import leech.Leech;
 
 /**
  *
@@ -18,6 +19,7 @@ import json.Builder.objects.M2M_Response;
 public class Bootstrap {
 
     private final M2M_Request req;
+
 
     public Bootstrap(M2M_Request req) {
         this.req = req;
@@ -47,6 +49,7 @@ public class Bootstrap {
             if (!req.COMPONENTS.isEmpty() && (req.COMPONENTS.size()!=mr.B_Service.size())) {
                 // I have got some service but have not got all of them . 
                 // It is time to start leeching.
+                Leech ll = new Leech(req, mr);
             }else{
                 mr.Token=req.TOKEN;
                 return mr;
