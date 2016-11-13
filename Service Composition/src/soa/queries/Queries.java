@@ -44,4 +44,11 @@ public abstract class Queries {
                +"\""+simple.ss_timestamp+"\", "
                +")";
     }// End of function 
+    
+     public static String insert_relation(SOA_server.Simple_Service ss, SOA_server.Complex_Service cs){
+       return  "INSERT INTO simple_service VALUES ("
+               +"\""+cs.csid+"\", "
+               +"\""+ss.ss_id+"\", "
+               +")";
+    }// End of function 
 }// End of Class queries

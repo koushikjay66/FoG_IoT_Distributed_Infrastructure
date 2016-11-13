@@ -5,6 +5,7 @@
  */
 package soa;
 
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -28,7 +29,7 @@ public class Bootstrap {
     // This compile method is the driver for the Bootstrap class . 
     // It handles all the things. 
     // Including the main SOA class and the leech class.
-    public M2M_Response compile() {
+    public M2M_Response compile() throws NoSuchAlgorithmException {
         // If it is REQ then I know The request has come and M2M Device 
         // In other words it is a normal REQUEST.
         // Now I need to call the SOA class
@@ -39,7 +40,7 @@ public class Bootstrap {
         return null;
     }
 
-    private M2M_Response callSOA() {
+    private M2M_Response callSOA() throws NoSuchAlgorithmException {
         SOA soa = new SOA(req.SERVICE_NAME);
 
         try {
@@ -50,6 +51,7 @@ public class Bootstrap {
                 // I have got some service but have not got all of them . 
                 // It is time to start leeching.
                 Leech ll = new Leech(req, mr);
+                ll.partial_service();
             }else{
                 mr.Token=req.TOKEN;
                 return mr;

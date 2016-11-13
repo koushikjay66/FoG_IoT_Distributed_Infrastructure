@@ -19,19 +19,19 @@ public class main {
         
         Scanner lab = new Scanner(System.in);
         System.out.print("Who is my parent: ");
-        String parent= lab.next();
+        String parent= "172.16.34.39";
         System.out.print("\nWho are my friends(seperate with comma): ");
         String mates[]=lab.next().split(",");
          System.out.print("\nWhat is my db host: ");
-        String db_host=lab.next();
+        String db_host="172.16.34.39";
         System.out.print("\nDB_USER: ");
-        String db_user= lab.next();
+        String db_user= "root";
         System.out.print("\nDB_Pass: ");
-        String db_pass=lab.next();
+        String db_pass="";
         System.out.print("\nDB_Name: ");
-        String db_name=lab.next();
+        String db_name="services_db";
         System.out.println("Enter Bootstrap Class Name");
-        Iniciar i = new Iniciar(lab.next())
+        Iniciar i = new Iniciar("soa.Bootstrap")
                 .parent(parent).mates(mates).database(db_host, db_user, db_pass, db_name);
         
         if(i.buildServer()){

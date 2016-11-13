@@ -19,7 +19,7 @@ import soa.queries.Queries;
  */
 public final class SOA {
 
-    private final mysql DB = new mysql();
+    private final mysql DB;
     private final String SERVICE_NAME;
     private M2M_Response response;
 
@@ -29,7 +29,8 @@ public final class SOA {
      * Device
      */
     public SOA(String SERVICE_NAME) {
-
+        DB = new mysql();
+        System.out.println("SOA ");
         this.SERVICE_NAME = SERVICE_NAME;
 
     }// End of constructor 
@@ -39,7 +40,7 @@ public final class SOA {
     // Otherwise it returns null. 
     // When it is null then it will directly call if the simple service of that name exists.
     public M2M_Response search() throws SQLException {
-
+        
         String cs_id = get_complex();
         response = new M2M_Response();
         if (cs_id != null) {
@@ -54,12 +55,13 @@ public final class SOA {
     }// End of function search
 
     private String get_complex() throws SQLException {
-
-        HashMap res = (HashMap) DB.processQuery(Queries.select_from_complex(SERVICE_NAME));
-
+        System.out.println("Not Null mna");
+        HashMap res = (HashMap) this.DB.processQuery(Queries.select_from_complex(SERVICE_NAME));
+        
         if (((ArrayList) res.get("csid")).isEmpty()) {
             return null;
         }
+        
         return (String) ((ArrayList) res.get("csid")).get(0);
 
     }// End of function get_complex
