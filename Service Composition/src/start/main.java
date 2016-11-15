@@ -23,7 +23,7 @@ public class main {
         System.out.print("\nWho are my friends(seperate with comma): ");
         String mates[]=lab.next().split(",");
          System.out.print("\nWhat is my db host: ");
-        String db_host="172.16.34.39";
+        String db_host="localhost";
         System.out.print("\nDB_USER: ");
         String db_user= "root";
         System.out.print("\nDB_Pass: ");

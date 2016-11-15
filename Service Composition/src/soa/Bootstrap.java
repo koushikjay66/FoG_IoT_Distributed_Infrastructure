@@ -9,6 +9,7 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import json.Builder.Builder;
 import json.Builder.objects.M2M_Request;
 import json.Builder.objects.M2M_Response;
 import leech.Leech;
@@ -40,13 +41,18 @@ public class Bootstrap {
         return null;
     }
 
-    private M2M_Response callSOA() throws NoSuchAlgorithmException {
+    private M2M_Response callSOA() {
         SOA soa = new SOA(req.SERVICE_NAME);
 
         try {
 
             M2M_Response mr = soa.search();
+            System.out.println(Builder.compile(mr));
             // The below for loop means I have given some optional parameter.
+            if(req ==null){
+                System.out.println("req null ");
+            }
+            System.out.println(req.COMPONENTS.isEmpty());
             if (!req.COMPONENTS.isEmpty() && (req.COMPONENTS.size()!=mr.B_Service.size())) {
                 // I have got some service but have not got all of them . 
                 // It is time to start leeching.
@@ -56,7 +62,7 @@ public class Bootstrap {
                 mr.Token=req.TOKEN;
                 return mr;
             }
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             Logger.getLogger(Bootstrap.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;

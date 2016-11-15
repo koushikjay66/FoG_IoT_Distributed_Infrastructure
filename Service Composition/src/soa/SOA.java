@@ -9,6 +9,8 @@ import database.mysql;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import json.Builder.objects.M2M_Response;
 import json.Builder.objects.M2M_Response.Simple_Service;
 import soa.queries.Queries;
@@ -30,7 +32,6 @@ public final class SOA {
      */
     public SOA(String SERVICE_NAME) {
         DB = new mysql();
-        System.out.println("SOA ");
         this.SERVICE_NAME = SERVICE_NAME;
 
     }// End of constructor 
@@ -39,23 +40,29 @@ public final class SOA {
     // If it does exists then get_complex service returns the csid. O
     // Otherwise it returns null. 
     // When it is null then it will directly call if the simple service of that name exists.
-    public M2M_Response search() throws SQLException {
+    public M2M_Response search()  {
         
-        String cs_id = get_complex();
-        response = new M2M_Response();
-        if (cs_id != null) {
-            get_simple(cs_id);
-        } else {
-            get_simple();
-            if (response.B_Service.isEmpty()) {
-                return null;
+        try {
+            String cs_id = get_complex();
+            response = new M2M_Response();
+            if (cs_id != null) {
+                get_simple(cs_id);
+            } else {
+                get_simple();
+                if (response.B_Service.isEmpty()) {
+                    return null;
+                }
             }
+            return response;
+        } // End of function search
+        catch (SQLException ex) {
+            Logger.getLogger(SOA.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return response;
-    }// End of function search
+        return null;
+    }
 
     private String get_complex() throws SQLException {
-        System.out.println("Not Null mna");
+
         HashMap res = (HashMap) this.DB.processQuery(Queries.select_from_complex(SERVICE_NAME));
         
         if (((ArrayList) res.get("csid")).isEmpty()) {

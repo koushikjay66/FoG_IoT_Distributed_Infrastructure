@@ -14,6 +14,7 @@ import json.Builder.objects.SOA_server;
 public abstract class Queries {
 
     public static String select_from_complex(String cs_name) {
+        System.out.println("SELECT csid FROM `complex_service` where cs_name=\""+cs_name+"\" LIMIT 1");
         return "SELECT csid FROM `complex_service` where cs_name=\""+cs_name+"\" LIMIT 1";
     }// End of 
     public static String select_from_simple_with_relation(String cs_id){
