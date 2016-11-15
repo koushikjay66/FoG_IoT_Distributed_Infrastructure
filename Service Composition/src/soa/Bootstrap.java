@@ -6,7 +6,6 @@
 package soa;
 
 import java.security.NoSuchAlgorithmException;
-import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import json.Builder.Builder;
@@ -52,7 +51,6 @@ public class Bootstrap {
             if(req ==null){
                 System.out.println("req null ");
             }
-            System.out.println(req.COMPONENTS.isEmpty());
             if (!req.COMPONENTS.isEmpty() && (req.COMPONENTS.size()!=mr.B_Service.size())) {
                 // I have got some service but have not got all of them . 
                 // It is time to start leeching.

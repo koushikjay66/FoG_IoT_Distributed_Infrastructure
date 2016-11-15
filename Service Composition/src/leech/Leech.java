@@ -37,9 +37,11 @@ public class Leech {
 
     // Driver class for all partial service request
     public void partial_service() throws NoSuchAlgorithmException {
-        String old_data = build_Req(getUnavailable());
+        getUnavailable();
+        String old_data = build_Req();
+        System.out.println(old_data);
         String newData = handleMultiple(old_data);
-
+        System.out.println(newData);
         // If new Data is null then it is time to call main server
         if (newData == null) {
             Requestinfo rs = new Requestinfo(Iniciar.PARENT_SERVER_IP);
@@ -51,28 +53,28 @@ public class Leech {
         SOA_server soa = parse(newData);
     }// End of partial_service
 
-    private String[] getUnavailable() {
-
-        int number_of_unfound = req.COMPONENTS.size() - res.B_Service.size();
-        String unavailable[] = new String[number_of_unfound];
-        int size = 0;
-        for (int i = 0; i < req.COMPONENTS.size(); i++) {
-            if (!req.COMPONENTS.get(i).equals(res.B_Service.get(i).Ss_name)) {
-                unavailable[size] = req.COMPONENTS.get(i);
-                size++;
+    private void  getUnavailable() {
+        
+        for (int i = 0; i <res.B_Service.size(); i++) {
+            System.out.println("i:"+String.valueOf(i));
+            if(req.COMPONENTS.contains(res.B_Service.get(i).Ss_name)){
+                System.out.println("Removed "+res.B_Service.get(i).Ss_name);
+                req.COMPONENTS.remove(res.B_Service.get(i).Ss_name);
+                   
             }
         }
-        return unavailable;
+  
+
     }
 
-    private String build_Req(String[] unavailable) throws NoSuchAlgorithmException {
+    private String build_Req() throws NoSuchAlgorithmException {
         M2M_Request req = new M2M_Request("REQ");
         String values = "";
-        for (int i = 0; i < unavailable.length; i++) {
-            values += unavailable[i] + ",";
+        for (int i = 0; i < req.COMPONENTS.size(); i++) {
+            values += req.COMPONENTS.get(i).toString() + ",";
         }
-
-        return Builder.compile(req.build(this.req.USERID, this.req.PASSWORD, this.req.SERVICE_NAME, values.substring(0, values.length() - 1)));
+        return Builder.compile(req);
+        //return Builder.compile(req.build(this.req.USERID, this.req.PASSWORD, this.req.SERVICE_NAME, values.substring(0, values.length() - 1)));
     }// End of function 
 
     private String handleMultiple(String JSON) {

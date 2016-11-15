@@ -40,8 +40,8 @@ public final class SOA {
     // If it does exists then get_complex service returns the csid. O
     // Otherwise it returns null. 
     // When it is null then it will directly call if the simple service of that name exists.
-    public M2M_Response search()  {
-        
+    public M2M_Response search() {
+
         try {
             String cs_id = get_complex();
             response = new M2M_Response();
@@ -64,11 +64,11 @@ public final class SOA {
     private String get_complex() throws SQLException {
 
         HashMap res = (HashMap) this.DB.processQuery(Queries.select_from_complex(SERVICE_NAME));
-        
+
         if (((ArrayList) res.get("csid")).isEmpty()) {
             return null;
         }
-        
+
         return (String) ((ArrayList) res.get("csid")).get(0);
 
     }// End of function get_complex
