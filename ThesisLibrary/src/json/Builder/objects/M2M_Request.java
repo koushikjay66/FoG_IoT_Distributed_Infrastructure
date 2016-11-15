@@ -21,7 +21,7 @@ public class M2M_Request {
     public String PASSWORD;
     public String TOKEN;
     public String SERVICE_NAME;
-    public ArrayList<String> COMPONENTS;
+    public ArrayList<String> COMPONENTS= new ArrayList<>();
 
     public M2M_Request(String type) {
         this.TYPE = type;

@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class M2M_Response  {
 
     public String Token;
-    public ArrayList<Simple_Service> B_Service = new ArrayList<Simple_Service>();
+    public ArrayList<Simple_Service> B_Service = new ArrayList<>();
 
     public class Simple_Service {
 

@@ -64,10 +64,12 @@ public class Requestedinfo {
             Constructor<?> cons = c.getConstructor(M2M_Request.class);
             Object o = cons.newInstance(req);
             Method m = o.getClass().getDeclaredMethod("compile");
+            System.out.println(Builder.compile(m.invoke(o))+"Paichi");
             return Builder.compile(m.invoke(o));
 
-        } catch (ClassNotFoundException | NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-            return "Can't Process your Request At This Time";
-        }
+        } catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | InstantiationException ex) {
+            Logger.getLogger(Requestedinfo.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+         return "Can't Process your Request At This Time";
     }// End of method generateResult
 }// End of class 

@@ -37,7 +37,7 @@ import service.Service;
  * dependencies (URL to the service) in order to dynamically fetch result when
  * TTL of the saved results has expired)
  *
- * @author arsha
+ * @author arshad
  */
 public class ServiceBootstrap {
 
