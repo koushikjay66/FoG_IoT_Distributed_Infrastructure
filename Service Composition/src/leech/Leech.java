@@ -70,9 +70,10 @@ public class Leech {
     private String build_Req() throws NoSuchAlgorithmException {
         M2M_Request req = new M2M_Request("REQ");
         String values = "";
-        for (int i = 0; i < req.COMPONENTS.size(); i++) {
-            values += req.COMPONENTS.get(i).toString() + ",";
+        for (int i = 0; i < this.req.COMPONENTS.size(); i++) {
+            values += this.req.COMPONENTS.get(i).toString() + ",";
         }
+        req.build(this.req.USERID, this.req.PASSWORD, this.req.SERVICE_NAME, values);
         return Builder.compile(req);
         //return Builder.compile(req.build(this.req.USERID, this.req.PASSWORD, this.req.SERVICE_NAME, values.substring(0, values.length() - 1)));
     }// End of function 
