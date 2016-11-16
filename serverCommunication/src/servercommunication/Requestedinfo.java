@@ -6,6 +6,8 @@
 package servercommunication;
 
 import java.net.Socket;
+import json.Builder.Builder;
+import json.Builder.objects.SOA_server;
 
 /**
  *
@@ -47,6 +49,48 @@ public class Requestedinfo {
         if(!possibleOrNot){
             return "Invalid Request";
         }
-        return "Requested thing found";
+        SOA_server ss = new SOA_server();
+        
+        ss.C_Service.cs_name = "env";
+        ss.C_Service.cs_provider="emni";
+        ss.C_Service.csid="env";
+        
+        SOA_server.Simple_Service kelu = (new SOA_server()).new Simple_Service();
+        SOA_server.Simple_Service hagu = (new SOA_server()).new Simple_Service();
+        SOA_server.Simple_Service yo = (new SOA_server()).new Simple_Service();
+        
+        kelu.ss_id="kelu";
+        kelu.ss_name="kelu";
+        kelu.ss_protocal="http";
+        kelu.ss_timestamp="time";
+        kelu.ss_ttl="500";
+        kelu.ss_url="www.google.com";
+        kelu.ss_value="50";
+        
+        hagu.ss_id="hagu";
+        hagu.ss_name="hagu";
+        hagu.ss_protocal="http";
+        hagu.ss_timestamp="time";
+        hagu.ss_ttl="500";
+        hagu.ss_url="www.google.com";
+        hagu.ss_value="50";
+        
+        yo.ss_id="yo";
+        yo.ss_name="yo";
+        yo.ss_protocal="http";
+        yo.ss_timestamp="time";
+        yo.ss_ttl="500";
+        yo.ss_url="www.google.com";
+        yo.ss_value="40";
+        
+        
+        
+        ss.B_Service.add(kelu);
+        ss.B_Service.add(hagu);
+        ss.B_Service.add(yo);
+        System.out.println(Builder.compile(ss));
+        return Builder.compile(ss);
     }// End of method generateResult
+    
+    
 }

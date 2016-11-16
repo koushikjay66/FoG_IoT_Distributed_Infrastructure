@@ -9,6 +9,8 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -36,21 +38,26 @@ public class M2M_Request {
         return this;
     } // End of function authentication.
 
-    private M2M_Request token() throws NoSuchAlgorithmException {
+    private M2M_Request token(){
 
-        if (USERID.equals(null) || USERID.equals(null)) {
-            throw new NullPointerException("USER ID/ Password can't be null");
+        try {
+            if (USERID.equals(null) || USERID.equals(null)) {
+                throw new NullPointerException("USER ID/ Password can't be null");
+            }
+            
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            md.update((USERID + PASSWORD).getBytes());
+            byte[] digest = md.digest();
+            StringBuffer sb = new StringBuffer();
+            for (byte b : digest) {
+                sb.append(String.format("%02x", b & 0xff));
+            }
+            this.TOKEN = sb.toString();
+            return this;
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(M2M_Request.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-        MessageDigest md = MessageDigest.getInstance("MD5");
-        md.update((USERID + PASSWORD).getBytes());
-        byte[] digest = md.digest();
-        StringBuffer sb = new StringBuffer();
-        for (byte b : digest) {
-            sb.append(String.format("%02x", b & 0xff));
-        }
-        this.TOKEN = sb.toString();
-        return this;
+        return null;
     }
 
     private M2M_Request service(String serviceName) {
@@ -70,11 +77,11 @@ public class M2M_Request {
         return this;
     }// End of service with two parameters
 
-    public M2M_Request build(String userID, String password, String serviceName) throws NoSuchAlgorithmException {
+    public M2M_Request build(String userID, String password, String serviceName) {
         return authentication(userID, password).token().service(serviceName);
     }
 
-    public M2M_Request build(String userID, String password, String serviceName, String commaSeperatedValues) throws NoSuchAlgorithmException {
+    public M2M_Request build(String userID, String password, String serviceName, String commaSeperatedValues){
         return authentication(userID, password).token().service(serviceName, commaSeperatedValues);
     }
 }

@@ -13,6 +13,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import server.Iniciar;
 
 /**
@@ -54,44 +56,61 @@ public final class mysql {
         return "jdbc:mysql://" + DB_HOST + "/" + DB_NAME + "?user=" + DB_USER + "&password=" + DB_PASS;
     }
 
-    private void openConnection() throws SQLException {
-        this.conn = DriverManager.getConnection(this.DB_URL);
-    }
-
-    private void closeConnection() throws SQLException {
-        if (result != null) {
-            result.close();
+    private void openConnection()  {
+        try {
+            this.conn = DriverManager.getConnection(this.DB_URL);
+        } catch (SQLException ex) {
+            Logger.getLogger(mysql.class.getName()).log(Level.SEVERE, null, ex);
         }
-        conn.close();
     }
 
-    private Object execute(String sql) throws SQLException {
-        openConnection();
-        HashMap res = new HashMap<>();
-        st = conn.createStatement();
-        if (st.execute(sql)) {
-
-            result = st.getResultSet();
+    private void closeConnection()  {
+        try {
             if (result != null) {
-                ResultSetMetaData rsmd = result.getMetaData();
-                int total_col = rsmd.getColumnCount();
-                String temp[] = new String[total_col];
-                for (int i = 0; i < total_col; i++) {
-                    temp[i] = rsmd.getColumnLabel(i + 1);
-                    res.put(temp[i], new ArrayList());
+                try {
+                    result.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(mysql.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                while (result.next()) {
+            }
+            conn.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(mysql.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private Object execute(String sql) {
+        try {
+            openConnection();
+            HashMap res = new HashMap<>();
+            st = conn.createStatement();
+            if (st.execute(sql)) {
+                
+                result = st.getResultSet();
+                if (result != null) {
+                    ResultSetMetaData rsmd = result.getMetaData();
+                    int total_col = rsmd.getColumnCount();
+                    String temp[] = new String[total_col];
                     for (int i = 0; i < total_col; i++) {
-                        ArrayList al = (ArrayList) res.get(temp[i]);
-                        al.add(result.getString(temp[i]));
+                        temp[i] = rsmd.getColumnLabel(i + 1);
+                        res.put(temp[i], new ArrayList());
                     }
+                    while (result.next()) {
+                        for (int i = 0; i < total_col; i++) {
+                            ArrayList al = (ArrayList) res.get(temp[i]);
+                            al.add(result.getString(temp[i]));
+                        }
+                    }
+                    
                 }
 
             }
-
+            closeConnection();
+            return res;
+        } catch (SQLException ex) {
+            Logger.getLogger(mysql.class.getName()).log(Level.SEVERE, null, ex);
         }
-        closeConnection();
-        return res;
+        return null;
     }
 
     /**
@@ -100,19 +119,24 @@ public final class mysql {
      * @return
      * @throws SQLException
      */
-    private Object execute(String sql, boolean t) throws SQLException {
-        int changed = -1;
-        openConnection();
-        st = conn.createStatement();
-        if (st.execute(sql)) {
-            changed = st.getUpdateCount();
-
+    private Object execute(String sql, boolean t)  {
+        try {
+            int changed = -1;
+            openConnection();
+            st = conn.createStatement();
+            if (st.execute(sql)) {
+                changed = st.getUpdateCount();
+                
+            }
+            closeConnection();
+            return changed;
+        } catch (SQLException ex) {
+            Logger.getLogger(mysql.class.getName()).log(Level.SEVERE, null, ex);
         }
-        closeConnection();
-        return changed;
+        return -2;
     }
 
-    public Object processQuery(String sql) throws SQLException {
+    public Object processQuery(String sql)  {
         Object t;
         String QueryType = sql.substring(0, sql.indexOf(" "));
         if (QueryType.equalsIgnoreCase("SELECT") || QueryType.equalsIgnoreCase("SHOW")) {
