@@ -1,0 +1,35 @@
+{
+      "Token":"2b2c5f9e6655ce42740584f4c25c85b6",
+      "C_Service":[
+                    {  
+                    "ServiceName":"environment",
+                    "Provider":"metro"
+                   }
+                ],
+      "B_Service":[  
+         "ServiceName":[
+            "temperature","humidity"
+         ],
+         "value":[  
+            "32","55"
+         ],
+         "optionalParameters":{  
+            "protocol":[  
+               "http","http"
+            ],
+            "url":[  
+               "http://www.example.com/temperature",
+               "http://www.example.com/temperature"
+            ],
+            "ttl":[  
+               "500","500"
+            ],
+            "timestamp":[  
+               "2016-10-08 08:26:27",
+               "2016-10-08 08:26:27"
+            ]
+         }
+      ]
+}
+
+

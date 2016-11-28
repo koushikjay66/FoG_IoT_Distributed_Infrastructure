@@ -1,0 +1,7 @@
+{
+    "DB_NAME":{
+            "TABLE_NAME":[
+                {"ServiceName" : "COLUMN NAME" , "Value":"COLUMN NAME"
+            ]
+    }
+}
