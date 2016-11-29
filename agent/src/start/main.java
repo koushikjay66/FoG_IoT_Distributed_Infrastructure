@@ -18,9 +18,9 @@ public class main {
 
         Scanner lab = new Scanner(System.in);
         System.out.print("Who is my parent: ");
-        String parent = "172.16.34.39";
+        String parent = "172.16.34.2";
         System.out.print("\nWho are my friends(seperate with comma): ");
-        String mates[] = "172.16.34.38,172.16.34.38".split(",");
+        String mates[] = "".split(",");
         System.out.print("\nWhat is my db host: ");
         String db_host = "localhost";
         System.out.print("\nDB_USER: ");
@@ -30,7 +30,7 @@ public class main {
         System.out.print("\nDB_Name: ");
         String db_name = "services_db";
         System.out.println("Enter Bootstrap Class Name");
-        Iniciar i = new Iniciar("soa.Bootstrap")
+        Iniciar i = new Iniciar("agent.AgentSociety")
                 .parent(parent).mates(mates).database(db_host, db_user, db_pass, db_name);
 
         if (i.buildServer()) {

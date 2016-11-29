@@ -38,6 +38,7 @@ public class AgentSociety {
         }
         // If agent has found that in its database then it will reply that to the SOA server
         if (ca.result != null) {
+            System.out.println("Ami Null Na"+ ca.result);
             return ca.result;
         }
 
@@ -142,6 +143,7 @@ public class AgentSociety {
                     ss.ss_timestamp = (String) ((ArrayList) res.get("ss_timestamp")).get(0);
                     ss.ss_url = (String) ((ArrayList) res.get("ss_url")).get(0);
                     ss.ss_value = (String) ((ArrayList) res.get("ss_value")).get(0);
+                    System.out.println("HAGU");
                     result.B_Service.add(ss);
                 }
 
