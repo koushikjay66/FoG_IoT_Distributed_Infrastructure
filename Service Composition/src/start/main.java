@@ -17,10 +17,10 @@ public class main {
     public static void main(String args[]) {
 
         Scanner lab = new Scanner(System.in);
-        System.out.print("Who is my parent: ");
+        System.out.print("Who is my Main Server: ");
         String parent = "172.16.34.39";
-        System.out.print("\nWho are my friends(seperate with comma): ");
-        String mates[] = "172.16.34.38,172.16.34.38".split(",");
+        System.out.print("\nWho are my agents(seperate with comma): ");
+        String mates[] = "172.16.34.39".split(",");
         System.out.print("\nWhat is my db host: ");
         String db_host = "localhost";
         System.out.print("\nDB_USER: ");

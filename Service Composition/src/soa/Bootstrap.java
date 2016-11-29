@@ -46,16 +46,20 @@ public class Bootstrap {
         try {
 
             M2M_Response mr = soa.search();
-            System.out.println(Builder.compile(mr));
             // The below for loop means I have given some optional parameter.
-            if(req ==null){
-                System.out.println("req null ");
+            if(mr ==null){
+                System.out.println("Kiccu Khuija Painai Need to req to agent ");
             }
-            if (!req.COMPONENTS.isEmpty() && (req.COMPONENTS.size()!=mr.B_Service.size())) {
+            
+            else if (!req.COMPONENTS.isEmpty() && mr!=null  && !mr.B_Service.isEmpty() && (req.COMPONENTS.size()!=mr.B_Service.size())) {
+                
                 // I have got some service but have not got all of them . 
                 // It is time to start leeching.
+                System.out.println("going to leech aroung");
                 Leech ll = new Leech(req, mr);
-                ll.partial_service();
+                 ll.partial_service();
+                 return ll.result();
+                 
             }else{
                 mr.Token=req.TOKEN;
                 return mr;

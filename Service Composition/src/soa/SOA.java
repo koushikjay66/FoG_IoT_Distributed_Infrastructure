@@ -89,7 +89,8 @@ public final class SOA {
 
     private void get_simple() throws SQLException {
         HashMap res = (HashMap) DB.processQuery(Queries.select_from_simple(SERVICE_NAME));
-        if (!((ArrayList) res.get("ss_name")).isEmpty()) {
+        System.out.println("Ekhon error khabo");
+        if (res.get("ss_name") != null && !((ArrayList) res.get("ss_name")).isEmpty()) {
             int rowLength = ((ArrayList) res.get("ss_name")).size();
             for (int i = 0; i < rowLength; i++) {
                 Simple_Service ss = (new M2M_Response()).new Simple_Service();
