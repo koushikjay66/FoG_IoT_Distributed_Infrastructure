@@ -20,8 +20,14 @@ public class main {
     public static void main(String[] args) throws NoSuchAlgorithmException {
         System.out.println("Enter SOA IP");
         Scanner lb = new Scanner(System.in);
+<<<<<<< HEAD
          String temp_ip =lb.next();
         //String temp_ip = "172.16.34.38";
+=======
+        String temp_ip =lb.next();
+       // String temp_ip = "13.65.35.53";
+        
+>>>>>>> eb1ebef13386bdb3d3b5c29ea7f88c6044a2b3f0
         Requestinfo rs = new Requestinfo(temp_ip);
         
         
