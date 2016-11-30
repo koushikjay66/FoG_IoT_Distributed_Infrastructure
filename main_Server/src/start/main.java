@@ -28,7 +28,7 @@ public class main {
         System.out.print("\nDB_Pass: ");
         String db_pass = lab.nextLine();//sXdG160000_6";
         System.out.print("\nDB_Name: ");
-        String db_name = "services_db";
+        String db_name = "main_Server";
         System.out.println("Enter Bootstrap Class Name");
         Iniciar i = new Iniciar("main.Main")
                 .parent(parent).mates(mates).database(db_host, db_user, db_pass, db_name);
