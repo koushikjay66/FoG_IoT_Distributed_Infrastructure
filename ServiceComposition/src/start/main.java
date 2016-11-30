@@ -18,17 +18,17 @@ public class main {
 
         Scanner lab = new Scanner(System.in);
         System.out.print("Who is my Main Server: ");
-        String parent = lab.nextLine();//"172.16.34.39";
+        String parent = "13.84.221.115";
         System.out.print("\nWho are my agents(seperate with comma): ");
-        String mates[] = lab.nextLine().split(",");//"172.16.34.39".split(",");
+        String mates[] = "".split(",");
         System.out.print("\nWhat is my db host: ");
-        String db_host = lab.nextLine();//"localhost";
+        String db_host = "localhost";
         System.out.print("\nDB_USER: ");
-        String db_user = lab.nextLine();//"root";
+        String db_user = "root";
         System.out.print("\nDB_Pass: ");
-        String db_pass = lab.nextLine();//"";
+        String db_pass = "sXdG160000_6";
         System.out.print("\nDB_Name: ");
-        String db_name = lab.nextLine();//"services_db";
+        String db_name = "services_db";
         System.out.println("Enter Bootstrap Class Name");
         Iniciar i = new Iniciar("soa.Bootstrap")
                 .parent(parent).mates(mates).database(db_host, db_user, db_pass, db_name);
