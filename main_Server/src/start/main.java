@@ -30,7 +30,7 @@ public class main {
         System.out.print("\nDB_Name: ");
         String db_name = "main_Server";
         System.out.println("Enter Bootstrap Class Name");
-        Iniciar i = new Iniciar("main.Main")
+        Iniciar i = new Iniciar("main.Bootstrap")
                 .parent(parent).mates(mates).database(db_host, db_user, db_pass, db_name);
 
         if (i.buildServer()) {
