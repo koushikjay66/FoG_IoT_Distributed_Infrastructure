@@ -20,7 +20,7 @@ public class main {
         System.out.print("Who is my parent: ");
         String parent = "40.77.60.97";
         System.out.print("\nWho are my friends(seperate with comma): ");
-        String mates[] = "".split(",");
+        String mates[] = "40.77.60.97".split(",");
         System.out.print("\nWhat is my db host: ");
         String db_host = "localhost";
         System.out.print("\nDB_USER: ");
