@@ -26,7 +26,7 @@ public class main {
         System.out.print("\nDB_USER: ");
         String db_user = "root";
         System.out.print("\nDB_Pass: ");
-        String db_pass = "sXdG160000_6";
+        String db_pass = "";//sXdG160000_6";
         System.out.print("\nDB_Name: ");
         String db_name = "services_db";
         System.out.println("Enter Bootstrap Class Name");
