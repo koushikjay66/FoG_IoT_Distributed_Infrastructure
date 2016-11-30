@@ -54,7 +54,7 @@ public class AgentSociety {
     private class CheckerAgent {
 
         SOA_server result = null;
-        final mysql DB = new mysql("localhost", "root", "", "agent_lookup_table");
+        final mysql DB = new mysql();
         final String SERVICE_NAME;
 
         CheckerAgent(String serviceName) {
