@@ -28,7 +28,7 @@ public class main {
         System.out.print("\nDB_Pass: ");
         String db_pass = lab.nextLine();
         System.out.print("\nDB_Name: ");
-        String db_name = "services_db";
+        String db_name = "Agent_lookup_table";
         System.out.println("Enter Bootstrap Class Name");
         Iniciar i = new Iniciar("agent.AgentSociety")
                 .parent(parent).mates(mates).database(db_host, db_user, db_pass, db_name);
