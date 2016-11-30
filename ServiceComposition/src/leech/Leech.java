@@ -51,11 +51,12 @@ public class Leech {
             newData = handleMultiple(old_data);
 
             // If new Data is null then it is time to call main server
-            if (newData == null) {
+            if (newData == null) {System.out.println("kicchu poai nai bacha");
                 Requestinfo rs = new Requestinfo(Iniciar.PARENT_SERVER_IP);
                 rs.sendData(newData);
                 newData = rs.getReply();
                 // New it is time to start parsing . 
+                System.out.println(newData);
             }
             SOA_server soa = parse(newData);
             try {
