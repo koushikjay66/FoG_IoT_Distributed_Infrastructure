@@ -20,11 +20,12 @@ public class main {
     public static void main(String[] args) throws NoSuchAlgorithmException {
         System.out.println("Enter SOA IP");
         Scanner lb = new Scanner(System.in);
-        // String temp_ip =lb.next();
-        String temp_ip = "172.16.34.38";
+         String temp_ip =lb.next();
+        //String temp_ip = "172.16.34.38";
         Requestinfo rs = new Requestinfo(temp_ip);
         
-        M2M_Request req= new M2M_Request("REQ").build("koushikjay66", "Nopassword01", "env", "erfan");
+        
+        M2M_Request req= new M2M_Request("REQ").build("koushikjay66", "Nopassword01", lb.nextLine());
         
         String reqJson = Builder.compile(req);
         
