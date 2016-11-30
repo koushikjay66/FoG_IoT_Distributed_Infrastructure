@@ -18,9 +18,9 @@ public class main {
 
         Scanner lab = new Scanner(System.in);
         System.out.print("Who is my Main Server: ");
-        String parent = "13.84.221.115";
+        String parent = "40.77.60.97";
         System.out.print("\nWho are my agents(seperate with comma): ");
-        String mates[] = "".split(",");
+        String mates[] = "13.84.221.115".split(",");
         System.out.print("\nWhat is my db host: ");
         String db_host = "localhost";
         System.out.print("\nDB_USER: ");
