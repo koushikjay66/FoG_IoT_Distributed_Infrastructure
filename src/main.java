@@ -23,7 +23,7 @@ public class main {
 
          String temp_ip =lb.next();
         //String temp_ip = "172.16.34.38";        
-        for (int i = 0; i < 100000; i++) {
+       //for (int i = 0; i < 100000; i++) {
             
         Requestinfo rs = new Requestinfo(temp_ip);
         
@@ -37,6 +37,6 @@ public class main {
         
         rs.sendData(reqJson);
         System.out.println(rs.getReply());
-        }
+        //}
     }
 }
