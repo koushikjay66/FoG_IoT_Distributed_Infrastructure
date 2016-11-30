@@ -28,7 +28,7 @@ public class main {
         Requestinfo rs = new Requestinfo(temp_ip);
         
         
-        M2M_Request req= new M2M_Request("REQ").build("koushikjay66", "Nopassword01", "env", "erfan");
+        M2M_Request req= new M2M_Request("REQ").build("koushikjay66", "Nopassword01", "env", "erfan,kelu");
         
         String reqJson = Builder.compile(req);
         
