@@ -18,7 +18,7 @@ public class main {
 
         Scanner lab = new Scanner(System.in);
         System.out.print("Who is my parent: ");
-        String parent = "172.16.34.2";
+        String parent = "40.77.60.97";
         System.out.print("\nWho are my friends(seperate with comma): ");
         String mates[] = "".split(",");
         System.out.print("\nWhat is my db host: ");
@@ -26,7 +26,7 @@ public class main {
         System.out.print("\nDB_USER: ");
         String db_user = "root";
         System.out.print("\nDB_Pass: ");
-        String db_pass = "";
+        String db_pass = lab.nextLine();
         System.out.print("\nDB_Name: ");
         String db_name = "services_db";
         System.out.println("Enter Bootstrap Class Name");
